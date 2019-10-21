@@ -45,6 +45,7 @@ namespace IssueTracker
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<ICompany, CompanyService>();
+            services.AddScoped<IDesignation, DesignationService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

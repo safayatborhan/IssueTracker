@@ -38,14 +38,14 @@ namespace IssueTracker.Service.Services
 
         public IEnumerable<Company> GetAll()
         {
-            var posts = _context.Company.ToList();
-            return posts;
+            var companies = _context.Company.ToList();
+            return companies;
         }
 
         public Company GetById(int id)
         {
-            var post = _context.Company.Where(x => x.Id == id).FirstOrDefault();
-            return post;
+            var company = _context.Company.Where(x => x.Id == id).FirstOrDefault();
+            return company;
         }
     }
 }
