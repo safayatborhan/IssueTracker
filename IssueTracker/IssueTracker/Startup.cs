@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using IssueTracker.Data;
 using IssueTracker.Data.Models;
+using IssueTracker.Data.Interfaces;
+using IssueTracker.Service.Services;
 
 namespace IssueTracker
 {
@@ -41,6 +43,8 @@ namespace IssueTracker
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddScoped<ICompany, CompanyService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
