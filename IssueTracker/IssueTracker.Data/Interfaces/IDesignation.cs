@@ -12,6 +12,6 @@ namespace IssueTracker.Data
         IEnumerable<Designation> GetAll();
         Task Create(Designation designation);
         Task Edit(Designation designation);
-        Task Delete(int id);
+        void Delete(int id);
     }
 }

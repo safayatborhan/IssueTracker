@@ -37,3 +37,13 @@ D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTra
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.csproj.CopyComplete
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.dll
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.pdb
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\Designation\Index.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\Designation\Create.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\Designation\Edit.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\Account\ForgotPassword.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\Account\Login.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\Account\Logout.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\Account\Register.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\Account\_ViewImports.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\_ViewImports.g.cshtml.cs

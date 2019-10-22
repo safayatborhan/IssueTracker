@@ -1,0 +1,32 @@
+﻿@model IssueTracker.Models.DesignationIndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Designations</h2>
+
+<p>
+    <a asp-controller="Designation" asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.DesignationList) {
+        <tr>
+            <td>@item.Code</td>
+            <td>@item.Name</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit","Designation", new {  id=item.Id  }) |
+                @Html.ActionLink("Delete", "Delete", "Designation", new {  id=item.Id  })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

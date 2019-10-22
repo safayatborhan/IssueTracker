@@ -37,20 +37,12 @@ namespace IssueTracker.Controllers
         public IActionResult Delete(int id)
         {
             _designationService.Delete(id);
-            var designations = _designationService.GetAll();
-            var model = designations.Select(x => new DesignationListingModel
-            {
-                Id = x.Id,
-                Code = x.Code,
-                Name = x.Name
-            });
-            var indexModel = new DesignationIndexModel
-            {
-                DesignationList = model
-            };
-            return View(indexModel);
+            return RedirectToAction("Index");
         }
-
+        public IActionResult Create()
+        {
+            return View(new DesignationCreateModel());
+        }
         [HttpPost]
         public async Task<IActionResult> Create(DesignationCreateModel model)
         {

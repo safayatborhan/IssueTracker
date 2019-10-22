@@ -22,11 +22,11 @@ namespace IssueTracker.Service.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public void Delete(int id)
         {
             var designation = _context.Designation.Where(x => x.Id == id).FirstOrDefault();
             _context.Designation.Remove(designation);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public async Task Edit(Designation designation)
