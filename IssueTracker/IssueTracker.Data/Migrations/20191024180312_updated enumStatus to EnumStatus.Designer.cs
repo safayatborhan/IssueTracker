@@ -4,14 +4,16 @@ using IssueTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IssueTracker.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191024180312_updated enumStatus to EnumStatus")]
+    partial class updatedenumStatustoEnumStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,14 +95,14 @@ namespace IssueTracker.Data.Migrations
 
                     b.Property<DateTime>("CreationDate");
 
+                    b.Property<int>("EnumStatus");
+
                     b.Property<string>("ModifiedById");
 
                     b.Property<DateTime>("ModifiedDate");
 
                     b.Property<string>("Name")
                         .IsRequired();
-
-                    b.Property<int>("Status");
 
                     b.HasKey("Id");
 

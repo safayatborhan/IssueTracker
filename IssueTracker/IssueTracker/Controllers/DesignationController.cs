@@ -46,8 +46,11 @@ namespace IssueTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(DesignationCreateModel model)
         {
-            var desgination = BuildDesignation(model);
-            await _designationService.Create(desgination);
+            if (ModelState.IsValid)
+            {
+                var desgination = BuildDesignation(model);
+                await _designationService.Create(desgination);                
+            }
             return RedirectToAction("Index", "Designation");
         }
 

@@ -38,7 +38,7 @@ namespace IssueTracker.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [EmailAddress]
+            [Display(Name = "User Name")]
             public string Email { get; set; }
 
             [Required]
