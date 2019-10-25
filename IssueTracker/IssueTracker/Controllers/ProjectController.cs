@@ -107,6 +107,13 @@ namespace IssueTracker.Controllers
             return View(projectModel);
         }
 
+        [Authorize]
+        public IActionResult Delete(int id)
+        {
+            _projectService.Delete(id);
+            return RedirectToAction(nameof(Index));
+        }
+
         private ProjectListingModel BuildProjectForEdit(Project project)
         {
             var model = new ProjectListingModel
