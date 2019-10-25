@@ -1,5 +1,5 @@
 ﻿@using IssueTracker.Data.Models
-@model IssueTracker.Data.Models.Company
+@model IssueTracker.Models.CompanyEditModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -13,8 +13,8 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="CreatedBy.Id" />
-            <input type="hidden" asp-for="CreationDate" />
+            <input type="hidden" asp-for="CreatedBy" />
+            <input type="hidden" asp-for="CreatedDate" />
             <div class="form-group">
                 <label asp-for="Code" class="control-label"></label>
                 <input asp-for="Code" class="form-control" />

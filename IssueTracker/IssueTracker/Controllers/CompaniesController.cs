@@ -9,6 +9,7 @@ using IssueTracker.Data;
 using IssueTracker.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using IssueTracker.Models;
 
 namespace IssueTracker.Controllers
 {
@@ -37,14 +38,17 @@ namespace IssueTracker.Controllers
                 return NotFound();
             }
 
-            var company = await _context.Company
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var company = await _context.Company.Where(m => m.Id == id)
+                .Include(m => m.CreatedBy)
+                .Include(m => m.ModifiedBy)
+                .FirstOrDefaultAsync();
+
             if (company == null)
             {
                 return NotFound();
             }
-
-            return View(company);
+            var model = BuilCompanyDetailModel(company);
+            return View(model);
         }
 
         // GET: Companies/Create
@@ -84,12 +88,13 @@ namespace IssueTracker.Controllers
                 return NotFound();
             }
 
-            var company = await _context.Company.FindAsync(id);
-            if (company == null)
+            var company = await _context.Company.Where(x => x.Id == id).Include(x => x.CreatedBy).FirstOrDefaultAsync();
+            var model = BuildCompanyEditModel(company);
+            if (model == null)
             {
                 return NotFound();
             }
-            return View(company);
+            return View(model);
         }
 
         // POST: Companies/Edit/5
@@ -98,27 +103,27 @@ namespace IssueTracker.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Code,Name,Status,CreatedBy,CreationDate")] Company company)
+        public async Task<IActionResult> Edit(int id, CompanyEditModel companyModel)
         {
-            if (id != company.Id)
+            if (id != companyModel.Id)
             {
                 return NotFound();
             }
-
+             
             if (ModelState.IsValid)
             {
                 try
                 {
                     var userId = _userManager.GetUserId(User);
-                    var user = _userManager.FindByIdAsync(userId).Result;
-                    company.ModifiedBy = user;
-                    company.ModifiedDate = DateTime.Now;
+                    companyModel.ModifiedBy = userId;
+                    companyModel.ModifiedDate = DateTime.Now;
+                    var company = BuildCompanyModel(companyModel);
                     _context.Update(company);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CompanyExists(company.Id))
+                    if (!CompanyExists(companyModel.Id))
                     {
                         return NotFound();
                     }
@@ -129,7 +134,7 @@ namespace IssueTracker.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(company);
+            return View(companyModel);
         }
 
         // GET: Companies/Delete/5
@@ -166,6 +171,56 @@ namespace IssueTracker.Controllers
         private bool CompanyExists(int id)
         {
             return _context.Company.Any(e => e.Id == id);
+        }
+
+        private Company BuildCompanyModel(CompanyEditModel model)
+        {
+            var createdBy = _userManager.FindByIdAsync(model.CreatedBy).Result;
+            var modifiedBy = _userManager.FindByIdAsync(model.ModifiedBy).Result;
+            var company = new Company
+            {
+                Id = model.Id,
+                Code = model.Code,
+                Name = model.Name,
+                Status = model.Status,
+                CreatedBy = createdBy,
+                CreationDate = model.CreatedDate,
+                ModifiedBy = modifiedBy,
+                ModifiedDate = (DateTime)model.ModifiedDate
+            };
+            return company;
+        }
+
+        private CompanyEditModel BuildCompanyEditModel(Company company)
+        {
+            var model = new CompanyEditModel
+            {
+                Id = company.Id,
+                Code = company.Code,
+                Name = company.Name,
+                Status = company.Status,
+                CreatedBy = company.CreatedBy != null ? company.CreatedBy.Id : string.Empty,
+                CreatedDate = company.CreationDate,
+                ModifiedBy = company.ModifiedBy != null ? company.ModifiedBy.Id : string.Empty,
+                ModifiedDate = company.ModifiedDate != null || company.ModifiedDate != DateTime.MinValue ? (DateTime?)company.ModifiedDate : null
+            };
+            return model;
+        }
+
+        private CompanyDetaiModel BuilCompanyDetailModel(Company company)
+        {
+            var model = new CompanyDetaiModel
+            {
+                Id = company.Id,
+                Code = company.Code,
+                Name = company.Name,
+                Status = company.Status.ToString(),
+                CreatedBy = company.CreatedBy != null ? company.CreatedBy.UserName : string.Empty,
+                CreatedDate = company.CreationDate != DateTime.MinValue ? company.CreationDate.ToString("dd MMM yyyy") : string.Empty,
+                ModifiedBy = company.ModifiedBy != null ? company.ModifiedBy.UserName : string.Empty,
+                ModifiedDate = company.ModifiedDate != DateTime.MinValue ? company.ModifiedDate.ToString("dd MMM yyyy") : string.Empty
+            };
+            return model;
         }
     }
 }
