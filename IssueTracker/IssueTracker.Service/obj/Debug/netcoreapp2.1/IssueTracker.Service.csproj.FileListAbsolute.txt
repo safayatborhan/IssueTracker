@@ -1,3 +1,4 @@
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Service\obj\Debug\netcoreapp2.1\IssueTracker.Service.csprojAssemblyReference.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Service\obj\Debug\netcoreapp2.1\IssueTracker.Service.csproj.CoreCompileInputs.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Service\obj\Debug\netcoreapp2.1\IssueTracker.Service.AssemblyInfoInputs.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Service\obj\Debug\netcoreapp2.1\IssueTracker.Service.AssemblyInfo.cs
@@ -11,4 +12,3 @@ D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Service\bin\Debug\netcoreapp2.1\
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Service\obj\Debug\netcoreapp2.1\IssueTracker.Service.csproj.CopyComplete
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Service\obj\Debug\netcoreapp2.1\IssueTracker.Service.dll
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Service\obj\Debug\netcoreapp2.1\IssueTracker.Service.pdb
-D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Service\obj\Debug\netcoreapp2.1\IssueTracker.Service.csprojAssemblyReference.cache

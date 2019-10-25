@@ -1,10 +1,10 @@
-D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.csprojAssemblyReference.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.csproj.CoreCompileInputs.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.RazorAssemblyInfo.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.RazorAssemblyInfo.cs
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.AssemblyInfoInputs.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.AssemblyInfo.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.csprojAssemblyReference.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\bin\Debug\netcoreapp2.1\IssueTracker.deps.json
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\bin\Debug\netcoreapp2.1\IssueTracker.runtimeconfig.json
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\bin\Debug\netcoreapp2.1\IssueTracker.runtimeconfig.dev.json
@@ -52,3 +52,6 @@ D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTra
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.csproj.CopyComplete
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.dll
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.pdb
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\Project\Index.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\Project\Create.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\Project\Edit.g.cshtml.cs

@@ -1,0 +1,64 @@
+﻿@using IssueTracker.Data.Models
+@model IssueTracker.Models.ProjectListingModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Company</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="Code" class="control-label"></label>
+                <input asp-for="Code" class="form-control" />
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjectType" class="control-label"></label>
+                <select asp-for="ProjectType" asp-items="Html.GetEnumSelectList<EnumProjectType>()" class="form-control">
+                    <option selected="selected" value="">Select a type</option>
+                </select>
+                <span asp-validation-for="ProjectType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" asp-items="Html.GetEnumSelectList<EnumProjectStatus>()" class="form-control">
+                    <option selected="selected" value="">Select a status</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyId" class="control-label"></label>
+                <select asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Id", "Name"))" class="form-control">
+                    <option value="">Select a company</option>
+                </select>
+                <span asp-validation-for="CompanyId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndOfContractDate" class="control-label"></label>
+                <input asp-for="EndOfContractDate" class="form-control" />
+                <span asp-validation-for="EndOfContractDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+            <input asp-for="Id" type="hidden" />
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
