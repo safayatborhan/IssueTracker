@@ -1,0 +1,147 @@
+﻿@using IssueTracker.Data.Models
+@model IssueTracker.Models.IssueLogListingModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Issue Log</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="CompanyId" class="control-label"></label>
+                <select id="comboCompany" asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Id", "Name"))" class="form-control">
+                    <option value="">Select a company</option>
+                </select>
+                <span asp-validation-for="CompanyId" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+            <label asp-for="ProjectId" class="control-label"></label>
+            <select asp-for="ProjectId" asp-items="@(new SelectList(Model.Projects.Where(x => x.CompanyId == Model.CompanyId).ToList(), "Id", "Name"))" class="form-control">
+                <option value="">Select a project</option>
+            </select>
+            <span asp-validation-for="ProjectId" class="text-danger"></span>
+        </div>*@
+            <div class="form-group">
+                <label asp-for="ProjectId" class="control-label"></label>
+                <select asp-for="ProjectId" id="comboProject" class="form-control"></select>
+                <span asp-validation-for="ProjectId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Header" class="control-label"></label>
+                <input asp-for="Header" class="form-control" />
+                <span asp-validation-for="Header" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Body" class="control-label"></label>
+                <textarea asp-for="Body" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="Body" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Note" class="control-label"></label>
+                <textarea asp-for="Note" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IssueDate" class="control-label"></label>
+                <input asp-for="IssueDate" class="form-control" />
+                <span asp-validation-for="IssueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Priority" class="control-label"></label>
+                <select asp-for="Priority" asp-items="Html.GetEnumSelectList<EnumIssuePriority>()" class="form-control">
+                    <option selected="selected" value="">Select a priority</option>
+                </select>
+                <span asp-validation-for="Priority" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IssueType" class="control-label"></label>
+                <select asp-for="IssueType" asp-items="Html.GetEnumSelectList<EnumIssueType>()" class="form-control">
+                    <option selected="selected" value="">Select a type</option>
+                </select>
+                <span asp-validation-for="IssueType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IssueLogInvolvedPersonId" class="control-label"></label>
+                <select id="comboInvolvedPerson" asp-for="IssueLogInvolvedPersonId" asp-items="@(new SelectList(Model.ApplicationUserListingModels, "Id", "Name"))" class="form-control">
+                    <option value="">Select a person</option>
+                </select>
+                <table id="tableIssueInvolvedPerson" class="table table-bordered" style="display:none">
+                    <tbody>
+                        <tr>
+                            <td style="display:none;">Id</td>
+                            <td>Name</td>
+                            <td>Email Address</td>
+                            <td>Designation</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaskHour" class="control-label"></label>
+                <input asp-for="TaskHour" class="form-control" />
+                <span asp-validation-for="TaskHour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+</div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#comboCompany').on('change', function () {
+            $('#comboProject option').remove();
+            var companyId = $('#comboCompany option:selected').val();
+            if (companyId != -1) {
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("FindProject", "IssueLog")?companyId=' + companyId,
+                    success: function (result) {
+                        //var s = '<option value="-1">Select project</option>';
+                        var s;
+                        for (var i = 0; i < result.length; i++) {
+                            s += '<option value="' + result[i].id + '">' + result[i].name + '</option>'
+                        }
+                        $('#comboProject').html(s);
+                    }
+                });
+            }
+        });
+
+
+        $('#comboInvolvedPerson').on('change', function () {
+            $("#tableIssueInvolvedPerson").removeAttr("style")
+            var issueInvolvedPersonId = $('#comboInvolvedPerson option:selected').val();
+            $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("FindInvolvedPerson", "IssueLog")?issueInvolvedPersonId=' + issueInvolvedPersonId,
+                    success: function (result) {
+                        $('#tableIssueInvolvedPerson')
+                            .append('<tr><td style="display:none;">' + result.id + '</td><td>' +
+                            result.name + '</td>><td>' + result.emailAddress + '</td>><td>'
+                            + result.designation + '</td><td><button type="button" id="' + result.id + '"  class="btn btn-danger">Remove</button></td></tr>');
+                    }
+                });
+        });
+
+        $('#tableIssueInvolvedPerson').on('click', 'button.btn.btn-danger', function () {
+            $(this).parents('tr').remove();
+
+        });
+    });
+</script>
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

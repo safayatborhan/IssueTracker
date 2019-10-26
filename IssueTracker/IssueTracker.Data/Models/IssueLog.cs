@@ -8,7 +8,6 @@ namespace IssueTracker.Data.Models
     {
         public int Id { get; set; }
         public virtual Project Project { get; set; }
-        public virtual Company Company { get; set; }
         public DateTime IssueDate { get; set; }
         public string Header { get; set; }
         public string Body { get; set; }
@@ -17,7 +16,7 @@ namespace IssueTracker.Data.Models
         public ApplicationUser AssignBy { get; set; }
         public DateTime AssignDate { get; set; }
         public string AssignRemarks { get; set; }
-        public IEnumerable<IssueLogInvolvedPerson> IssueLogInvolvedPersons { get; set; }
+        public virtual IEnumerable<IssueLogInvolvedPerson> IssueLogInvolvedPersons { get; set; }
         public EnumIssuePriority Priority { get; set; }
         public double TaskHour { get; set; }
         public EnumIssueType IssueType { get; set; }

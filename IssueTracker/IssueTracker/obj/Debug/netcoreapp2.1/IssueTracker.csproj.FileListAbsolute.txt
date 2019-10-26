@@ -55,3 +55,5 @@ D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTra
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\Project\Index.g.cshtml.cs
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\Project\Create.g.cshtml.cs
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\Project\Edit.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\IssueLog\Index.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\IssueLog\Create.g.cshtml.cs
