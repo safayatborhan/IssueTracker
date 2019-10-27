@@ -157,16 +157,24 @@
 
             $("#tableIssueInvolvedPerson tbody tr").each(function () {
                 var row = $(this);
-                var involvedPerson = {};
-                involvedPerson.Id = row.find("td").eq(0).html();
-                involvedPersons.push(involvedPerson);
+                involvedPersons.push(row.find("td").eq(0).html());
             });            
             issueLogListingModel.IssueLogInvolvedPersonIds = involvedPersons;
 
             $.ajax({
                 type: "POST",
                 url: "/IssueLog/Create",
-                data: JSON.stringify(issueLogListingModel),
+                data: JSON.stringify({
+                    'ProjectId': issueLogListingModel.ProjectId,
+                    'IssueDate': issueLogListingModel.IssueDate,
+                    'Header': issueLogListingModel.Header,
+                    'Body': issueLogListingModel.Body,
+                    'Note': issueLogListingModel.Note,
+                    'Priority': issueLogListingModel.Priority,
+                    'TaskHour': issueLogListingModel.TaskHour,
+                    'IssueType': issueLogListingModel.IssueType,
+                    'IssueLogInvolvedPersonIds': issueLogListingModel.IssueLogInvolvedPersonIds.join()
+                }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (r) {

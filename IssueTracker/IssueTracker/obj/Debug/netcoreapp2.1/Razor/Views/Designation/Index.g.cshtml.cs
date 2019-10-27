@@ -65,7 +65,7 @@ using IssueTracker.Models;
             WriteLiteral("\r\n<h2>Designations</h2>\r\n\r\n<p>\r\n    ");
             EndContext();
             BeginContext(129, 90, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d1eeaa7f990047d38c8ef88d5f290342", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ed074dc6a27e43dbb71d5470b1e1a80b", async() => {
                 BeginContext(205, 10, true);
                 WriteLiteral("Create New");
                 EndContext();

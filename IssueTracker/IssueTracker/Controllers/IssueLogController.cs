@@ -54,11 +54,14 @@ namespace IssueTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                List<string> involvedPersonIds = new List<string>();
+                if(!string.IsNullOrEmpty(issueLogListingModel.IssueLogInvolvedPersonIds))
+                    involvedPersonIds = issueLogListingModel.IssueLogInvolvedPersonIds.Split(',').ToList();
                 var userId = _userManager.GetUserId(User);
                 var user = _userManager.FindByIdAsync(userId).Result;
                 var involvedPersons = new List<ApplicationUser>();
-                if(issueLogListingModel.IssueLogInvolvedPersonIds.Count() > 0)
-                    involvedPersons = _userManager.Users.Where(x => issueLogListingModel.IssueLogInvolvedPersonIds.Contains(x.Id)).ToList();
+                if(involvedPersonIds.Count() > 0)
+                    involvedPersons = _userManager.Users.Where(x => involvedPersonIds.Contains(x.Id)).ToList();
                 involvedPersons.Add(user);
                 var issueLog = BuildIssueLogForCreate(issueLogListingModel, user, involvedPersons);
                 await _issueLogService.Create(issueLog);

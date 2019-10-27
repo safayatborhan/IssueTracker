@@ -15,6 +15,6 @@ namespace IssueTracker.Models
         public string Priority { get; set; }
         public string TaskHour { get; set; }
         public string IssueType { get; set; }
-        public List<string> IssueLogInvolvedPersonIds { get; set; }
+        public string IssueLogInvolvedPersonIds { get; set; }
     }
 }
