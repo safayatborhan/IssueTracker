@@ -49,6 +49,8 @@ namespace IssueTracker.Models
         [Display(Name = "Select a project")]
         public int ProjectId { get; set; }
 
+        public IEnumerable<string> IssueLogInvolvedPersonIds { get; set; }
+
         public IEnumerable<IssueLogInvolvedPersonListingModel> IssueLogInvolvedPersons { get; set; }
         public IEnumerable<ProjectListingModel> Projects { get; set; }
         public IEnumerable<CompanyListingModel> Companies { get; set; } 

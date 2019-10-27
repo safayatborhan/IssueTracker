@@ -49,21 +49,23 @@ namespace IssueTracker.Controllers
             return View(model);
         }
 
-        [Authorize]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IssueLogListingModel model)
+        public async Task<IActionResult> Create([FromBody]IssueLogListingModelForAjax issueLogListingModel)
         {
             if (ModelState.IsValid)
             {
                 var userId = _userManager.GetUserId(User);
                 var user = _userManager.FindByIdAsync(userId).Result;
-                var issueLog = BuildIssueLogForCreate(model, user);
+                var involvedPersons = new List<ApplicationUser>();
+                if(issueLogListingModel.IssueLogInvolvedPersonIds.Count() > 0)
+                    involvedPersons = _userManager.Users.Where(x => issueLogListingModel.IssueLogInvolvedPersonIds.Contains(x.Id)).ToList();
+                involvedPersons.Add(user);
+                var issueLog = BuildIssueLogForCreate(issueLogListingModel, user, involvedPersons);
                 await _issueLogService.Create(issueLog);
 
                 return RedirectToAction(nameof(Index));
             }
-            return View(model);
+            return View(issueLogListingModel);
         }
 
         public IActionResult FindProject(int companyId)
@@ -115,34 +117,35 @@ namespace IssueTracker.Controllers
             return model;
         }
 
-        private IssueLog BuildIssueLogForCreate(IssueLogListingModel model, ApplicationUser applicationUser)
+        private IssueLog BuildIssueLogForCreate(IssueLogListingModelForAjax model, ApplicationUser applicationUser, IEnumerable<ApplicationUser> involvedPersons)
         {
             var issueLog = new IssueLog
             {
-                Project = BuildProject(model.ProjectId),
-                IssueDate = (DateTime)model.IssueDate,
+                Project = BuildProject(int.Parse(model.ProjectId)),
+                IssueDate = DateTime.Parse(model.IssueDate),
                 Header = model.Header,
                 Body = model.Body,
                 Note = model.Note,
                 EntryBy = applicationUser,
                 AssignDate = DateTime.Now,
-                IssueLogInvolvedPersons = BuildIssueLogInvolvedPerson(model,applicationUser),
-                Priority = (EnumIssuePriority)model.Priority,
-                TaskHour = model.TaskHour,
-                IssueType = (EnumIssueType)model.IssueType
+                IssueLogInvolvedPersons = BuildIssueLogInvolvedPerson(involvedPersons),
+                Priority = (EnumIssuePriority)int.Parse(model.Priority),
+                TaskHour = double.Parse(model.TaskHour),
+                IssueType = (EnumIssueType)int.Parse(model.IssueType)
             };
 
             return issueLog;
         }
 
-        private IEnumerable<IssueLogInvolvedPerson> BuildIssueLogInvolvedPerson(IssueLogListingModel model, ApplicationUser applicationUser)
+        private IEnumerable<IssueLogInvolvedPerson> BuildIssueLogInvolvedPerson(IEnumerable<ApplicationUser> involvedPersonsModel)
         {
             var involvedPersons = new List<IssueLogInvolvedPerson>();
-            var involvedPerson = new IssueLogInvolvedPerson
+            foreach(var ip in involvedPersonsModel)
             {
-                InvolvedPerson = applicationUser
-            };
-            involvedPersons.Add(involvedPerson);
+                var involvedPerson = new IssueLogInvolvedPerson();
+                involvedPerson.InvolvedPerson = ip;
+                involvedPersons.Add(involvedPerson);
+            }            
             return involvedPersons;
         }
 
