@@ -62,6 +62,7 @@ namespace IssueTracker.Service.Services
                     .ThenInclude(y => y.Company)
                .Include(x => x.IssueLogInvolvedPersons)
                     .ThenInclude(y => y.InvolvedPerson)
+                        .ThenInclude(z => z.Designation)
                 .Include(x => x.EntryBy)
                 .Include(x => x.AssignBy)
                     .FirstOrDefault();

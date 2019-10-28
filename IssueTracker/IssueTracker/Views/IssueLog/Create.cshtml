@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form>
             <div class="form-group">
                 <label asp-for="CompanyId" class="control-label"></label>
                 <select id="comboCompany" asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Id", "Name"))" class="form-control">
@@ -18,13 +18,6 @@
                 </select>
                 <span asp-validation-for="CompanyId" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-            <label asp-for="ProjectId" class="control-label"></label>
-            <select asp-for="ProjectId" asp-items="@(new SelectList(Model.Projects.Where(x => x.CompanyId == Model.CompanyId).ToList(), "Id", "Name"))" class="form-control">
-                <option value="">Select a project</option>
-            </select>
-            <span asp-validation-for="ProjectId" class="text-danger"></span>
-        </div>*@
             <div class="form-group">
                 <label asp-for="ProjectId" class="control-label"></label>
                 <select asp-for="ProjectId" id="comboProject" class="form-control"></select>
@@ -177,8 +170,8 @@
                 }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function (r) {
-
+                success: function (data) {
+                    window.location.href = data.redirectTo;
                 }
             });
         }); 

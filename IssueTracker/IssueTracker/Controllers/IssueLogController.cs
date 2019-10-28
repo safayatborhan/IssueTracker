@@ -50,7 +50,7 @@ namespace IssueTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]IssueLogListingModelForAjax issueLogListingModel)
+        public JsonResult Create([FromBody]IssueLogListingModelForAjax issueLogListingModel)
         {
             if (ModelState.IsValid)
             {
@@ -61,14 +61,22 @@ namespace IssueTracker.Controllers
                 var user = _userManager.FindByIdAsync(userId).Result;
                 var involvedPersons = new List<ApplicationUser>();
                 if(involvedPersonIds.Count() > 0)
+                {
                     involvedPersons = _userManager.Users.Where(x => involvedPersonIds.Contains(x.Id)).ToList();
+                }                    
                 involvedPersons.Add(user);
                 var issueLog = BuildIssueLogForCreate(issueLogListingModel, user, involvedPersons);
-                await _issueLogService.Create(issueLog);
+                _issueLogService.Create(issueLog);
 
-                return RedirectToAction(nameof(Index));
+                return Json(new
+                {
+                    redirectTo = Url.Action("Index", "IssueLog")
+                });
             }
-            return View(issueLogListingModel);
+            return Json(new
+            {
+                redirectTo = Url.Action("Index", "IssueLog"),
+            });
         }
 
         public IActionResult FindProject(int companyId)
@@ -97,9 +105,54 @@ namespace IssueTracker.Controllers
             return new JsonResult(issueInvolvedPerson);
         }
 
+        [Authorize]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var issueLog = _issueLogService.GetById((int)id);
+            var model = BuildIssueLogForEdit(issueLog);
+            if (model == null)
+            {
+                return NotFound();
+            }
+            return View(model);
+        }
+
+        private IssueLogListingModel BuildIssueLogForEdit(IssueLog issueLog)
+        {
+            var model = new IssueLogListingModel
+            {
+                Id = issueLog.Id,
+                CompanyId = issueLog.Project.Company.Id,
+                CompanyName = issueLog.Project.Company.Name,
+                ProjectId = issueLog.Project.Id,
+                ProjectName = issueLog.Project.Name,
+                IssueDate = issueLog.IssueDate,
+                Header = issueLog.Header,
+                Body = issueLog.Body,
+                Note = issueLog.Note,
+                EntryBy = issueLog.EntryBy,
+                AssignBy = issueLog.AssignBy,
+                AssignDate = issueLog.AssignDate,
+                AssignRemarks = issueLog.AssignRemarks,
+                IssueLogInvolvedPersons = BuildIssueLogInvolvedPerson(issueLog.IssueLogInvolvedPersons),
+                Priority = issueLog.Priority,
+                TaskHour = issueLog.TaskHour,
+                IssueType = issueLog.IssueType,
+                ApplicationUserListingModels = BuildApplicationUserList()
+            };
+            return model;
+        }        
+
         private IEnumerable<ApplicationUserListingModel> BuildApplicationUserList()
         {
-            var users = _userManager.Users;
+            var currentUserId = _userManager.GetUserId(User);
+
+            var users = _userManager.Users.AsEnumerable().Where(x => x.Id != currentUserId);
             var model = users.Select(x => new ApplicationUserListingModel
             {
                 Id = x.Id,
@@ -150,6 +203,23 @@ namespace IssueTracker.Controllers
                 involvedPersons.Add(involvedPerson);
             }            
             return involvedPersons;
+        }
+
+        private IEnumerable<IssueLogInvolvedPersonListingModel> BuildIssueLogInvolvedPerson(IEnumerable<IssueLogInvolvedPerson> involvedPersons)
+        {
+            var model = new List<IssueLogInvolvedPersonListingModel>();
+            foreach (var ip in involvedPersons)
+            {
+                var person = new IssueLogInvolvedPersonListingModel
+                {
+                    Id = ip.Id,
+                    UserName = ip.InvolvedPerson.UserName,
+                    EmailAddress = ip.InvolvedPerson.Email,
+                    Designation = ip.InvolvedPerson.Designation.Name
+                };
+                model.Add(person);
+            }
+            return model;
         }
 
         private Project BuildProject(int projectId)

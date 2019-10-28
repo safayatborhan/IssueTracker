@@ -1,0 +1,112 @@
+﻿@using IssueTracker.Data.Models
+@model IssueTracker.Models.IssueLogListingModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Issue Log</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CompanyId" />
+            <input type="hidden" asp-for="ProjectId" />
+            <div class="form-group">
+                <label asp-for="CompanyName" class="control-label"></label>
+                <input disabled asp-for="CompanyName" id="txtHeader" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjectName" class="control-label"></label>
+                <input disabled asp-for="ProjectName" id="txtHeader" class="form-control" />
+                <span asp-validation-for="ProjectName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Header" class="control-label"></label>
+                <input asp-for="Header" id="txtHeader" class="form-control" />
+                <span asp-validation-for="Header" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Body" class="control-label"></label>
+                <textarea asp-for="Body" id="txtBody" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="Body" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Note" class="control-label"></label>
+                <textarea asp-for="Note" id="txtNote" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IssueDate" class="control-label"></label>
+                <input asp-for="IssueDate" id="dtpIssueDate" class="form-control" />
+                <span asp-validation-for="IssueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Priority" class="control-label"></label>
+                <select asp-for="Priority" id="comboPriority" asp-items="Html.GetEnumSelectList<EnumIssuePriority>()" class="form-control">
+                    <option selected="selected" value="">Select a priority</option>
+                </select>
+                <span asp-validation-for="Priority" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IssueType" class="control-label"></label>
+                <select asp-for="IssueType" id="comboIssueType" asp-items="Html.GetEnumSelectList<EnumIssueType>()" class="form-control">
+                    <option selected="selected" value="">Select a type</option>
+                </select>
+                <span asp-validation-for="IssueType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IssueLogInvolvedPersonId" class="control-label"></label>
+                <select id="comboInvolvedPerson" asp-for="IssueLogInvolvedPersonId" asp-items="@(new SelectList(Model.ApplicationUserListingModels, "Id", "Name"))" class="form-control">
+                    <option value="">Select a person</option>
+                </select>
+                <table id="tableIssueInvolvedPerson" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td style="display:none;">Id</td>
+                            <td>Name</td>
+                            <td>Email Address</td>
+                            <td>Designation</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var person in Model.IssueLogInvolvedPersons)
+                        {
+                        <tr>
+                            <td style="display:none;">@person.Id</td>
+                            <td>@person.UserName</td>
+                            <td>@person.EmailAddress</td>
+                            <td>@person.Designation</td>
+                            <td>
+                                <a asp-action="" asp-route-id="@person.Id" 
+                                onclick="return confirm('Are you sure you want to delete this person?')">Delete</a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaskHour" class="control-label"></label>
+                <input asp-for="TaskHour" id="txtTaskHour" class="form-control" />
+                <span asp-validation-for="TaskHour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

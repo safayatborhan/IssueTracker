@@ -15,5 +15,9 @@ namespace IssueTracker.Models
         public double ExpectedHour { get; set; }
         public DateTime ReceiveDate { get; set; }
         public string ReceiveRemarks { get; set; }
+
+        public string UserName { get; set; }
+        public string EmailAddress { get; set; }
+        public string Designation { get; set; }
     }
 }
