@@ -29,17 +29,20 @@ namespace IssueTracker.Service.Services
             await _context.SaveChangesAsync();
         }
 
-        public async void Delete(int id)
+        public void Delete(int id)
         {
-            var issueLog = _context.IssueLog.Where(x => x.Id == id).FirstOrDefault();
+            var issueLog = GetById(id);
             _context.IssueLog.Remove(issueLog);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
-        public async Task Edit(IssueLog issueLog)
+        public void Edit(IssueLog issueLog)
         {
+            var issueLogToDeleteInvolvedPerson = GetById(issueLog.Id);
+            _context.IssueLogInvolvedPerson.RemoveRange(issueLogToDeleteInvolvedPerson.IssueLogInvolvedPersons);
             _context.IssueLog.Update(issueLog);
-            await _context.SaveChangesAsync();
+
+            _context.SaveChanges();
         }
 
         public IEnumerable<IssueLog> GetAll()
@@ -57,7 +60,7 @@ namespace IssueTracker.Service.Services
 
         public IssueLog GetById(int id)
         {
-            var issueLog = _context.IssueLog.Where(x => x.Id == id)
+            var issueLog = _context.IssueLog.AsNoTracking().Where(x => x.Id == id)
                .Include(x => x.Project)
                     .ThenInclude(y => y.Company)
                .Include(x => x.IssueLogInvolvedPersons)
@@ -67,14 +70,6 @@ namespace IssueTracker.Service.Services
                 .Include(x => x.AssignBy)
                     .FirstOrDefault();
             return issueLog;
-        }
-
-        public async void RemoveInvolvedPerson(int issueLogId, int involvedPersonId)
-        {
-            var issueLog = GetById(issueLogId);
-            var involvedPerson = issueLog.IssueLogInvolvedPersons.Where(x => x.Id == involvedPersonId).FirstOrDefault();
-            _context.IssueLogInvolvedPerson.Remove(involvedPerson);
-            await _context.SaveChangesAsync();
         }
     }
 }

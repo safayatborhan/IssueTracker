@@ -7,6 +7,7 @@ namespace IssueTracker.Models
 {
     public class IssueLogListingModelForAjax
     {
+        public int Id { get; set; }
         public string ProjectId { get; set; }
         public string IssueDate { get; set; }
         public string Header { get; set; }

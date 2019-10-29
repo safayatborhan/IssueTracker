@@ -1,4 +1,3 @@
-D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.csprojAssemblyReference.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.csproj.CoreCompileInputs.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.RazorAssemblyInfo.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.RazorAssemblyInfo.cs
@@ -16,6 +15,7 @@ D:\WORKS\IssueTracker\IssueTracker\IssueTracker\bin\Debug\netcoreapp2.1\IssueTra
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\bin\Debug\netcoreapp2.1\IssueTracker.Service.dll
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\bin\Debug\netcoreapp2.1\IssueTracker.Data.pdb
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\bin\Debug\netcoreapp2.1\IssueTracker.Service.pdb
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.csprojAssemblyReference.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.TagHelpers.input.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.TagHelpers.output.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.RazorCoreGenerate.cache

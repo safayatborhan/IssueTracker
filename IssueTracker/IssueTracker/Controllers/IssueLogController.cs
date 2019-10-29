@@ -79,6 +79,39 @@ namespace IssueTracker.Controllers
             });
         }
 
+        [HttpPost]
+        public JsonResult Edit([FromBody]IssueLogListingModelForAjax issueLogListingModel)
+        {
+            if (ModelState.IsValid)
+            {
+                List<string> involvedPersonIds = new List<string>();
+                if (!string.IsNullOrEmpty(issueLogListingModel.IssueLogInvolvedPersonIds))
+                    involvedPersonIds = issueLogListingModel.IssueLogInvolvedPersonIds.Split(',').ToList();
+                var userId = _userManager.GetUserId(User);
+                var user = _userManager.FindByIdAsync(userId).Result;
+                var involvedPersons = new List<ApplicationUser>();
+                involvedPersons.Add(user);
+                if (involvedPersonIds.Count() > 0)
+                {
+                    var persons = _userManager.Users.Where(x => involvedPersonIds.Contains(x.Id)).ToList();
+                    involvedPersons.AddRange(persons);
+                }
+                
+                var issueLog = BuildIssueLogForCreate(issueLogListingModel, user, involvedPersons);
+                issueLog.Id = issueLogListingModel.Id;
+                _issueLogService.Edit(issueLog);
+
+                return Json(new
+                {
+                    redirectTo = Url.Action("Index", "IssueLog")
+                });
+            }
+            return Json(new
+            {
+                redirectTo = Url.Action("Index", "IssueLog"),
+            });
+        }
+
         public IActionResult FindProject(int companyId)
         {
             var projects = _projectService.GetAll()
@@ -120,6 +153,13 @@ namespace IssueTracker.Controllers
                 return NotFound();
             }
             return View(model);
+        }
+
+        [Authorize]
+        public IActionResult Delete(int id)
+        {
+            _issueLogService.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
 
         private IssueLogListingModel BuildIssueLogForEdit(IssueLog issueLog)
@@ -193,10 +233,11 @@ namespace IssueTracker.Controllers
             return issueLog;
         }
 
+
         private IEnumerable<IssueLogInvolvedPerson> BuildIssueLogInvolvedPerson(IEnumerable<ApplicationUser> involvedPersonsModel)
         {
             var involvedPersons = new List<IssueLogInvolvedPerson>();
-            foreach(var ip in involvedPersonsModel)
+            foreach (var ip in involvedPersonsModel)
             {
                 var involvedPerson = new IssueLogInvolvedPerson();
                 involvedPerson.InvolvedPerson = ip;
@@ -215,7 +256,7 @@ namespace IssueTracker.Controllers
                     Id = ip.Id,
                     UserName = ip.InvolvedPerson.UserName,
                     EmailAddress = ip.InvolvedPerson.Email,
-                    Designation = ip.InvolvedPerson.Designation.Name
+                    Designation = ip.InvolvedPerson.Designation != null ? ip.InvolvedPerson.Designation.Name : string.Empty
                 };
                 model.Add(person);
             }

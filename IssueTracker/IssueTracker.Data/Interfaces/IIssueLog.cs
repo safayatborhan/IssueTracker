@@ -11,11 +11,10 @@ namespace IssueTracker.Data
         IssueLog GetById(int id);
         IEnumerable<IssueLog> GetAll();
         Task Create(IssueLog Project);
-        Task Edit(IssueLog Project);
+        void Edit(IssueLog Project);
         void Delete(int id);
 
         Task AddInvolvedPersons(IEnumerable<IssueLogInvolvedPerson> issueLogInvolvedPersons);
-        void RemoveInvolvedPerson(int issueLogId,int involvedPersonId);
 
     }
 }

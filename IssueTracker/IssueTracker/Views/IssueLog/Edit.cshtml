@@ -12,17 +12,17 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="CompanyId" />
-            <input type="hidden" asp-for="ProjectId" />
+            <input id="txtId" type="hidden" asp-for="Id" />
+            <input id="txtCompany" type="hidden" asp-for="CompanyId" />
+            <input id="txtProject" type="hidden" asp-for="ProjectId" />
             <div class="form-group">
                 <label asp-for="CompanyName" class="control-label"></label>
-                <input disabled asp-for="CompanyName" id="txtHeader" class="form-control" />
+                <input disabled asp-for="CompanyName" class="form-control" />
                 <span asp-validation-for="CompanyName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ProjectName" class="control-label"></label>
-                <input disabled asp-for="ProjectName" id="txtHeader" class="form-control" />
+                <input disabled asp-for="ProjectName" class="form-control" />
                 <span asp-validation-for="ProjectName" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -75,18 +75,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var person in Model.IssueLogInvolvedPersons)
+                        @foreach (var person in Model.IssueLogInvolvedPersons)
                         {
-                        <tr>
-                            <td style="display:none;">@person.Id</td>
-                            <td>@person.UserName</td>
-                            <td>@person.EmailAddress</td>
-                            <td>@person.Designation</td>
-                            <td>
-                                <a asp-action="" asp-route-id="@person.Id" 
-                                onclick="return confirm('Are you sure you want to delete this person?')">Delete</a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td style="display:none;">@person.Id</td>
+                                <td>@person.UserName</td>
+                                <td>@person.EmailAddress</td>
+                                <td>@person.Designation</td>
+                                <td>
+                                    <button type="button" id="@person.Id" class="btn btn-danger">Remove</button>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -97,11 +96,78 @@
                 <span asp-validation-for="TaskHour" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="button" id="btnSubmit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#comboInvolvedPerson').on('change', function () {
+            var issueInvolvedPersonId = $('#comboInvolvedPerson option:selected').val();
+            $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("FindInvolvedPerson", "IssueLog")?issueInvolvedPersonId=' + issueInvolvedPersonId,
+                    success: function (result) {
+                        $('#tableIssueInvolvedPerson')
+                            .append('<tr><td style="display:none;">' + result.id + '</td><td>' +
+                            result.name + '</td>><td>' + result.emailAddress + '</td>><td>'
+                            + result.designation + '</td><td><button type="button" id="' + result.id + '"  class="btn btn-danger">Remove</button></td></tr>');
+                    }
+                });
+        });
+
+        $('#tableIssueInvolvedPerson').on('click', 'button.btn.btn-danger', function () {
+            $(this).parents('tr').remove();
+
+        });
+
+        $("#btnSubmit").click(function () {
+            var involvedPersons = new Array();
+            var issueLogListingModel = {};
+
+            issueLogListingModel.Id = $("#txtId").val()
+            issueLogListingModel.ProjectId = $("#txtProject").val();
+            issueLogListingModel.IssueDate = $("#dtpIssueDate").val();
+            issueLogListingModel.Header = $("#txtHeader").val();
+            issueLogListingModel.Body = $("#txtBody").val();
+            issueLogListingModel.Note = $("#txtNote").val();
+            issueLogListingModel.Priority = $("#comboPriority").val();
+            issueLogListingModel.TaskHour = $("#txtTaskHour").val();
+            issueLogListingModel.IssueType = $("#comboIssueType").val();
+
+            $("#tableIssueInvolvedPerson tbody tr").each(function () {
+                var row = $(this);
+                involvedPersons.push(row.find("td").eq(0).html());
+            });
+            issueLogListingModel.IssueLogInvolvedPersonIds = involvedPersons;
+
+            $.ajax({
+                type: "POST",
+                url: "/IssueLog/Edit",
+                data: JSON.stringify({
+                    'Id': issueLogListingModel.Id,
+                    'ProjectId': issueLogListingModel.ProjectId,
+                    'IssueDate': issueLogListingModel.IssueDate,
+                    'Header': issueLogListingModel.Header,
+                    'Body': issueLogListingModel.Body,
+                    'Note': issueLogListingModel.Note,
+                    'Priority': issueLogListingModel.Priority,
+                    'TaskHour': issueLogListingModel.TaskHour,
+                    'IssueType': issueLogListingModel.IssueType,
+                    'IssueLogInvolvedPersonIds': issueLogListingModel.IssueLogInvolvedPersonIds.join()
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    window.location.href = data.redirectTo;
+                }
+            });
+        });
+    });
+</script>
 
 <div>
     <a asp-action="Index">Back to List</a>
