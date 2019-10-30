@@ -79,6 +79,23 @@ namespace IssueTracker.Controllers
             });
         }
 
+        [Authorize]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var issueLog = _issueLogService.GetById((int)id);
+            var model = BuildIssueLogForEdit(issueLog);
+            if (model == null)
+            {
+                return NotFound();
+            }
+            return View(model);
+        }
+
         [HttpPost]
         public JsonResult Edit([FromBody]IssueLogListingModelForAjax issueLogListingModel)
         {
@@ -97,7 +114,7 @@ namespace IssueTracker.Controllers
                     involvedPersons.AddRange(persons);
                 }
                 
-                var issueLog = BuildIssueLogForCreate(issueLogListingModel, user, involvedPersons);
+                var issueLog = BuildIssueLogForCreate(issueLogListingModel, user, involvedPersons.Distinct());
                 issueLog.Id = issueLogListingModel.Id;
                 _issueLogService.Edit(issueLog);
 
@@ -136,24 +153,7 @@ namespace IssueTracker.Controllers
                 designation = user.Designation != null ? user.Designation.Name : ""
             };
             return new JsonResult(issueInvolvedPerson);
-        }
-
-        [Authorize]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var issueLog = _issueLogService.GetById((int)id);
-            var model = BuildIssueLogForEdit(issueLog);
-            if (model == null)
-            {
-                return NotFound();
-            }
-            return View(model);
-        }
+        }        
 
         [Authorize]
         public IActionResult Delete(int id)
@@ -254,6 +254,7 @@ namespace IssueTracker.Controllers
                 var person = new IssueLogInvolvedPersonListingModel
                 {
                     Id = ip.Id,
+                    UserId = ip.InvolvedPerson.Id,
                     UserName = ip.InvolvedPerson.UserName,
                     EmailAddress = ip.InvolvedPerson.Email,
                     Designation = ip.InvolvedPerson.Designation != null ? ip.InvolvedPerson.Designation.Name : string.Empty

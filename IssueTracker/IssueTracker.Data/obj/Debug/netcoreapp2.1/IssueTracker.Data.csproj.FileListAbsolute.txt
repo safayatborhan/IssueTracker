@@ -3,7 +3,6 @@ D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Data\bin\Debug\netcoreapp2.1\Iss
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Data\bin\Debug\netcoreapp2.1\IssueTracker.Data.runtimeconfig.dev.json
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Data\bin\Debug\netcoreapp2.1\IssueTracker.Data.dll
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Data\bin\Debug\netcoreapp2.1\IssueTracker.Data.pdb
-D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Data\obj\Debug\netcoreapp2.1\IssueTracker.Data.csprojAssemblyReference.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Data\obj\Debug\netcoreapp2.1\IssueTracker.Data.csproj.CoreCompileInputs.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Data\obj\Debug\netcoreapp2.1\IssueTracker.Data.AssemblyInfoInputs.cache
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker.Data\obj\Debug\netcoreapp2.1\IssueTracker.Data.AssemblyInfo.cs

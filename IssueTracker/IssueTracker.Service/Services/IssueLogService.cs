@@ -38,9 +38,33 @@ namespace IssueTracker.Service.Services
 
         public void Edit(IssueLog issueLog)
         {
-            var issueLogToDeleteInvolvedPerson = GetById(issueLog.Id);
-            _context.IssueLogInvolvedPerson.RemoveRange(issueLogToDeleteInvolvedPerson.IssueLogInvolvedPersons);
-            _context.IssueLog.Update(issueLog);
+            var issueLogSaved = GetById(issueLog.Id);
+
+            var issueLogInvolvedPersons = issueLogSaved.IssueLogInvolvedPersons;
+            if (issueLogInvolvedPersons.Any())
+            {
+                foreach (var issueLogInvolvedPerson in issueLogInvolvedPersons)
+                {
+                    _context.Entry(issueLogInvolvedPerson).State = EntityState.Deleted;
+                }
+            }
+            //_context.IssueLogInvolvedPerson.RemoveRange(issueLogSaved.IssueLogInvolvedPersons);
+            issueLogSaved.Id = issueLogSaved.Id;
+            issueLogSaved.Project = issueLog.Project;
+            issueLogSaved.IssueDate = issueLog.IssueDate;
+            issueLogSaved.Header = issueLog.Header;
+            issueLogSaved.Body = issueLog.Body;
+            issueLogSaved.Note = issueLog.Note;
+            issueLogSaved.EntryBy = issueLog.EntryBy;
+            issueLogSaved.AssignBy = issueLog.AssignBy;
+            issueLogSaved.AssignDate = issueLog.AssignDate;
+            issueLogSaved.AssignRemarks = issueLog.AssignRemarks;
+            issueLogSaved.IssueLogInvolvedPersons = issueLog.IssueLogInvolvedPersons;
+            issueLogSaved.Priority = issueLog.Priority;
+            issueLogSaved.TaskHour = issueLog.TaskHour;
+            issueLogSaved.IssueType = issueLog.IssueType;            
+
+            //_context.IssueLog.Update(issueLogSaved);
 
             _context.SaveChanges();
         }
@@ -60,7 +84,7 @@ namespace IssueTracker.Service.Services
 
         public IssueLog GetById(int id)
         {
-            var issueLog = _context.IssueLog.AsNoTracking().Where(x => x.Id == id)
+            var issueLog = _context.IssueLog.Where(x => x.Id == id)
                .Include(x => x.Project)
                     .ThenInclude(y => y.Company)
                .Include(x => x.IssueLogInvolvedPersons)

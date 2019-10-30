@@ -68,6 +68,7 @@
                     <thead>
                         <tr>
                             <td style="display:none;">Id</td>
+                            <td style="display:none;">UserId</td>
                             <td>Name</td>
                             <td>Email Address</td>
                             <td>Designation</td>
@@ -77,15 +78,16 @@
                     <tbody>
                         @foreach (var person in Model.IssueLogInvolvedPersons)
                         {
-                            <tr>
-                                <td style="display:none;">@person.Id</td>
-                                <td>@person.UserName</td>
-                                <td>@person.EmailAddress</td>
-                                <td>@person.Designation</td>
-                                <td>
-                                    <button type="button" id="@person.Id" class="btn btn-danger">Remove</button>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td style="display:none;">@person.Id</td>
+                            <td style="display:none;">@person.UserId</td>
+                            <td>@person.UserName</td>
+                            <td>@person.EmailAddress</td>
+                            <td>@person.Designation</td>
+                            <td>
+                                <button type="button" id="@person.UserId" class="btn btn-danger">Remove</button>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>
@@ -112,7 +114,7 @@
                     url: '@Url.Action("FindInvolvedPerson", "IssueLog")?issueInvolvedPersonId=' + issueInvolvedPersonId,
                     success: function (result) {
                         $('#tableIssueInvolvedPerson')
-                            .append('<tr><td style="display:none;">' + result.id + '</td><td>' +
+                            .append('<tr><td style="display:none;">0</td><td style="display:none;">' + result.id + '</td><td>' +
                             result.name + '</td>><td>' + result.emailAddress + '</td>><td>'
                             + result.designation + '</td><td><button type="button" id="' + result.id + '"  class="btn btn-danger">Remove</button></td></tr>');
                     }
@@ -140,7 +142,7 @@
 
             $("#tableIssueInvolvedPerson tbody tr").each(function () {
                 var row = $(this);
-                involvedPersons.push(row.find("td").eq(0).html());
+                involvedPersons.push(row.find("td").eq(1).html());
             });
             issueLogListingModel.IssueLogInvolvedPersonIds = involvedPersons;
 
