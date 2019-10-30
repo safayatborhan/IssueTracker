@@ -23,10 +23,10 @@ namespace IssueTracker.Service.Services
             throw new NotImplementedException();
         }
 
-        public async Task Create(IssueLog issueLog)
+        public void Create(IssueLog issueLog)
         {
             _context.IssueLog.Add(issueLog);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public void Delete(int id)
