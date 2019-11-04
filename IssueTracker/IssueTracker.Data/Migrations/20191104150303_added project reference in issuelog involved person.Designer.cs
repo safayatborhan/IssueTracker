@@ -4,14 +4,16 @@ using IssueTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IssueTracker.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191104150303_added project reference in issuelog involved person")]
+    partial class addedprojectreferenceinissueloginvolvedperson
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,6 +183,8 @@ namespace IssueTracker.Data.Migrations
 
                     b.Property<int?>("IssueLogId");
 
+                    b.Property<int?>("ProjectId");
+
                     b.Property<DateTime>("ReceiveDate");
 
                     b.Property<string>("ReceiveRemarks");
@@ -190,6 +194,8 @@ namespace IssueTracker.Data.Migrations
                     b.HasIndex("InvolvedPersonId");
 
                     b.HasIndex("IssueLogId");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("IssueLogInvolvedPerson");
                 });
@@ -384,9 +390,13 @@ namespace IssueTracker.Data.Migrations
                         .WithMany()
                         .HasForeignKey("InvolvedPersonId");
 
-                    b.HasOne("IssueTracker.Data.Models.IssueLog", "IssueLog")
+                    b.HasOne("IssueTracker.Data.Models.IssueLog")
                         .WithMany("IssueLogInvolvedPersons")
                         .HasForeignKey("IssueLogId");
+
+                    b.HasOne("IssueTracker.Data.Models.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId");
                 });
 
             modelBuilder.Entity("IssueTracker.Data.Models.Project", b =>

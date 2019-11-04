@@ -46,6 +46,7 @@ namespace IssueTracker
             services.AddScoped<IDesignation, DesignationService>();
             services.AddScoped<IProject, ProjectService>();
             services.AddScoped<IIssueLog, IssueLogService>();
+            services.AddScoped<IInvolvedPerson, InvolvedPersonService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
