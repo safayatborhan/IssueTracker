@@ -19,7 +19,7 @@ namespace IssueTracker.Service.Services
 
         public IEnumerable<IssueLogInvolvedPerson> GetAllLogs(string userId)
         {
-            var issueLogInvolvedPersons = _context.IssueLogInvolvedPerson
+            var issueLogInvolvedPersons = _context.IssueLogInvolvedPerson.Where(x => x.InvolvedPerson.Id == userId)
                 .Include(x => x.InvolvedPerson)
                     .ThenInclude(y => y.Designation)
                 .Include(x => x.IssueLog)
@@ -30,6 +30,20 @@ namespace IssueTracker.Service.Services
                         .   ThenInclude(k => k.Company)                    
                 .ToList();
             return issueLogInvolvedPersons;
+        }
+
+        public IssueLogInvolvedPerson GetById(int id)
+        {
+            var issueLogInvolvedPerson = _context.IssueLogInvolvedPerson.Where(i => i.Id == id)
+                .Include(x => x.InvolvedPerson)
+                    .ThenInclude(y => y.Designation)
+                .Include(x => x.IssueLog)
+                    .ThenInclude(y => y.EntryBy)
+                        .ThenInclude(z => z.Designation)
+                .Include(x => x.IssueLog)
+                        .ThenInclude(y => y.Project)
+                        .ThenInclude(k => k.Company).FirstOrDefault();
+            return issueLogInvolvedPerson;
         }
 
         public async Task UpdateIssueLog(IssueLogInvolvedPerson issueLogInvolvedPerson)

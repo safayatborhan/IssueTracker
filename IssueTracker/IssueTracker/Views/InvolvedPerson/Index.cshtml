@@ -6,7 +6,8 @@
 
 <h2>Index</h2>
 
-
+<!-- Modal placeholder -->
+<div id="modal-placeholder"></div>
 <table class="table">
     <thead>
         <tr>
@@ -42,17 +43,11 @@
                     @Html.DisplayFor(modelItem => item.ExpectedDate)
                 </td>
                 <td>
-                    @if (item.ReceiveDate == null)
-                    {
-                        <a asp-action="Start" asp-route-id="@item.Id">Start</a>
-                    }
-                    else
-                    {
-                        <a asp-action="End" asp-route-id="@item.Id">Edit</a>
-                    }
+                    <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#view-issue" data-url="@Url.Action("View","InvolvedPerson", new { id = item.Id })">
+                        View
+                    </button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-

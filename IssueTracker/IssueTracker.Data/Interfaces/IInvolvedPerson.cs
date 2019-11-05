@@ -10,5 +10,6 @@ namespace IssueTracker.Data
     {
         IEnumerable<IssueLogInvolvedPerson> GetAllLogs(string userId);
         Task UpdateIssueLog(IssueLogInvolvedPerson issueLogInvolvedPerson);
+        IssueLogInvolvedPerson GetById(int id);
     }
 }

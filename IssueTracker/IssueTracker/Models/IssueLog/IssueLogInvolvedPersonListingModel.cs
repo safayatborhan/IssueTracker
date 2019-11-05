@@ -27,5 +27,11 @@ namespace IssueTracker.Models
         public string OtherInvolvedPersons { get; set; }
         public DateTime? ExpectedDate { get; set; }
         public string IssueType { get; set; }
+
+        public string Title { get; set; }
+        public string Detail { get; set; }
+        public string Priority { get; set; }
+
+        public bool IsStart { get; set; }
     }
 }

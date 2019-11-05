@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using IssueTracker.Data;
@@ -29,6 +30,45 @@ namespace IssueTracker.Controllers
             var involvedPersons = _involvedPersonService.GetAllLogs(userId);
             var model = BuildInvolvedPersonIndex(involvedPersons);
             return View(model);
+        }
+
+        public IActionResult View(int id)
+        {
+            //int id = 85;
+            var issuelogInvolvedPerson = _involvedPersonService.GetById(id);
+            var model = BuildAssignedIssueModel(issuelogInvolvedPerson);
+            return PartialView("_InvolvedPersonModalPartial", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> View(IssueLogInvolvedPersonListingModel model)
+        {
+            var issuelogInvolvedPerson = _involvedPersonService.GetById(model.Id);
+            if(model.IsStart)
+                issuelogInvolvedPerson.ReceiveDate = DateTime.Now;
+            else
+                issuelogInvolvedPerson.HoursToComplete = (DateTime.Now - issuelogInvolvedPerson.ReceiveDate).TotalHours;
+            await _involvedPersonService.UpdateIssueLog(issuelogInvolvedPerson);
+            return RedirectToAction("Index", "InvolvedPerson");
+        }
+
+        private IssueLogInvolvedPersonListingModel BuildAssignedIssueModel(IssueLogInvolvedPerson issuelogInvolvedPerson)
+        {
+            var p = issuelogInvolvedPerson;
+            var model = new IssueLogInvolvedPersonListingModel
+            {
+                Id = p.Id,
+                CompanyName = p.IssueLog.Project.Company.Name,
+                ProjectName = p.IssueLog.Project.Name,
+                ExpectedDate = p.IssueLog.IssueDate,
+                Title = p.IssueLog.Header,
+                Detail = p.IssueLog.Body,
+                Priority = p.IssueLog.Priority.ToString(),
+                IssueType = p.IssueLog.IssueType.ToString(),
+                ReceiveDate = p.ReceiveDate != DateTime.MinValue ? (DateTime?)p.ReceiveDate : null,
+                IsStart = p.ReceiveDate != DateTime.MinValue ? false : true
+            };
+            return model;
         }
 
         private IEnumerable<IssueLogInvolvedPersonListingModel> BuildInvolvedPersonIndex(IEnumerable<IssueLogInvolvedPerson> involvedPersons)
