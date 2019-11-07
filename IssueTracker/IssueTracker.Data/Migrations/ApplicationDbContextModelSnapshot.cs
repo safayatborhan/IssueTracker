@@ -31,6 +31,8 @@ namespace IssueTracker.Data.Migrations
 
                     b.Property<int?>("DesignationId");
 
+                    b.Property<string>("DesignationName");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 

@@ -112,14 +112,16 @@ namespace IssueTracker.Areas.Identity.Pages.Account
                 var filePath = Path.Combine(uploads, uniqueFileName);
                 Input.ProfileImageUrl.CopyTo(new FileStream(filePath, FileMode.Create));
                 //end
+                var empDesignation = _designationService.GetById(Input.DesignationId);
                 var user = new ApplicationUser
                 {
                     UserName = Input.UserName,
                     Email = Input.Email,
-                    Designation = _designationService.GetById(Input.DesignationId),
+                    Designation = empDesignation,
                     IsActive = true,
                     MemberSince = Input.MemberSince,
-                    ProfileImageUrl = uniqueFileName
+                    ProfileImageUrl = uniqueFileName,
+                    DesignationName = empDesignation.Name
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 

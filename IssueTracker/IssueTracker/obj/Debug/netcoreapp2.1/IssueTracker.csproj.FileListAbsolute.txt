@@ -60,3 +60,10 @@ D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTra
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\IssueTracker.pdb
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\InvolvedPerson\Index.g.cshtml.cs
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\InvolvedPerson\_InvolvedPersonModalPartial.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\Account\Manage\DeletePersonalData.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\Account\Manage\EnableAuthenticator.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\Account\Manage\Index.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\Account\Manage\PersonalData.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\Account\Manage\SetPassword.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\Account\Manage\_ManageNav.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\Account\Manage\_ViewImports.g.cshtml.cs

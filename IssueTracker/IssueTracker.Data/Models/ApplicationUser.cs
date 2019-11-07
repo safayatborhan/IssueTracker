@@ -11,5 +11,6 @@ namespace IssueTracker.Data.Models
         public DateTime MemberSince { get; set; }
         public bool IsActive { get; set; }
         public Designation Designation { get; set; }
+        public string DesignationName { get; set; }
     }
 }
