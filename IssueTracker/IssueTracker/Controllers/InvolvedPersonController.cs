@@ -81,7 +81,9 @@ namespace IssueTracker.Controllers
                 RaisedByName = x.IssueLog.EntryBy.UserName,
                 ExpectedDate = x.IssueLog.IssueDate != DateTime.MinValue ? (DateTime?)x.IssueLog.IssueDate : null,
                 ReceiveDate = x.ReceiveDate != DateTime.MinValue ? (DateTime?)x.ReceiveDate : null,
-                IssueType = x.IssueLog.IssueType.ToString()
+                IssueType = x.IssueLog.IssueType.ToString(),
+                RaisedByImageUrl = x.IssueLog.EntryBy.ProfileImageUrl,
+                Title = x.IssueLog.Header
             });
             return model;
         }

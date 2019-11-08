@@ -4,51 +4,53 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (Model.Any())
+{
+    <h2 class="text-center">Assigned Issues</h2>
+    <div>
+        <form asp-controller="Search" asp-action="Search" method="post">
+            <input type="text" class="homeSearch" placeholder="Search..." />
+        </form>
+    </div>
 
-<h2>Index</h2>
+    <!-- Modal placeholder -->
+    <div id="modal-placeholder"></div>
 
-<!-- Modal placeholder -->
-<div id="modal-placeholder"></div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompanyName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RaisedByName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExpectedDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CompanyName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RaisedByName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ExpectedDate)
-                </td>
-                <td>
-                    <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#view-issue" data-url="@Url.Action("View","InvolvedPerson", new { id = item.Id })">
-                        View
-                    </button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <table class="table table-hover">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="col-md-1">
+                            <div class="raisedByImage" style="background-image:url(../uploads/@item.RaisedByImageUrl);"></div>
+                        </div>
+                        <div class="col-md-11">
+                            <div class="issueTitle">
+                                <span>
+                                    <a style="cursor:pointer" data-toggle="ajax-modal" data-target="#view-issue" data-url="@Url.Action("View","InvolvedPerson", new { id = item.Id })">
+                                        @item.Title
+                                    </a>
+                                </span>
+                                <span>
+                                    - @item.ProjectName (@item.CompanyName)
+                                </span>
+                                <br />
+                                Expected date : @DateTime.Parse(item.ExpectedDate.ToString()).ToString("dd MMM yyyy")
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="noIssue">
+        <h3>You don't have any assigned issue<br /></h3>
+    </div>
+}
+
+
+

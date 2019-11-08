@@ -1,6 +1,7 @@
 ﻿using IssueTracker.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,6 +26,8 @@ namespace IssueTracker.Models
         public string CompanyName { get; set; }
         public string RaisedByName { get; set; }
         public string OtherInvolvedPersons { get; set; }
+
+        [DataType(DataType.Date)]
         public DateTime? ExpectedDate { get; set; }
         public string IssueType { get; set; }
 
@@ -33,5 +36,6 @@ namespace IssueTracker.Models
         public string Priority { get; set; }
 
         public bool IsStart { get; set; }
+        public string RaisedByImageUrl { get; set; }
     }
 }

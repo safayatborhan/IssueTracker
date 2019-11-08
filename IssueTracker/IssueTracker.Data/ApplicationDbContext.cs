@@ -20,5 +20,6 @@ namespace IssueTracker.Data
         public DbSet<IssueLog> IssueLog { get; set; }
         public DbSet<IssueLogInvolvedPerson> IssueLogInvolvedPerson { get; set; }
         public DbSet<Project> Project { get; set; }
+        public DbSet<Notification> Notification { get; set; }
     }
 }

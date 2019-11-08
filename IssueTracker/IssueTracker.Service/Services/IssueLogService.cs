@@ -33,6 +33,7 @@ namespace IssueTracker.Service.Services
         {
             var issueLog = GetById(id);
             _context.IssueLog.Remove(issueLog);
+            _context.IssueLogInvolvedPerson.RemoveRange(issueLog.IssueLogInvolvedPersons);
             _context.SaveChanges();
         }
 

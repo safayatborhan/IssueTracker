@@ -47,6 +47,7 @@ namespace IssueTracker
             services.AddScoped<IProject, ProjectService>();
             services.AddScoped<IIssueLog, IssueLogService>();
             services.AddScoped<IInvolvedPerson, InvolvedPersonService>();
+            services.AddScoped<INotification, NotificationService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -75,7 +76,7 @@ namespace IssueTracker
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=InvolvedPerson}/{action=Index}/{id?}");
             });
         }
     }

@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link href="~/css/site.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -39,7 +40,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -323,15 +324,26 @@
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
                 <!-- Sidebar user panel -->
-                <div class="user-panel">
-                    <div class="pull-left image">
-                        <img src="~/uploads/@UserManager.GetUserAsync(User).Result.ProfileImageUrl" class="img-circle" alt="User Image">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <div class="user-panel">
+                        <div class="pull-left image">
+                            <img src="~/uploads/@UserManager.GetUserAsync(User).Result.ProfileImageUrl" class="img-circle" alt="User Image">
+                        </div>
+                        <div class="pull-left info">
+                            <p>@UserManager.GetUserName(User)</p>
+                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                        </div>
                     </div>
-                    <div class="pull-left info">
-                        <p>@UserManager.GetUserName(User)</p>
-                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                }
+                else
+                {
+                    <div class="user-panel">
+                        <div class="pull-left image">
+                            <img src="" class="img-circle" alt="User Image">
+                        </div>
                     </div>
-                </div>
+                }
                 <!-- search form -->
                 <form action="#" method="get" class="sidebar-form">
                     <div class="input-group">
@@ -386,7 +398,7 @@
         <div class="content-wrapper">
             <!-- Main content -->
             <section class="content">
-                <div class="row" style="margin-left:0px; margin-right:0px">
+                <div class="row body-content" style="margin-left:0px; margin-right:0px">
                     @RenderBody()
                 </div>
 
@@ -440,5 +452,6 @@
     <script src="~/dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="~/dist/js/demo.js"></script>
+    <script src="~/js/site.js"></script>
 </body>
 </html>

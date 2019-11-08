@@ -16,13 +16,15 @@ namespace IssueTracker.Controllers
     {
         private readonly IIssueLog _issueLogService;
         private readonly IProject _projectService;
+        private readonly INotification _notificationService;
         private static UserManager<ApplicationUser> _userManager;
 
-        public IssueLogController(IIssueLog issueLogService,IProject projectService, UserManager<ApplicationUser> userManager)
+        public IssueLogController(IIssueLog issueLogService,IProject projectService, UserManager<ApplicationUser> userManager, INotification notificationService)
         {
             _issueLogService = issueLogService;
             _projectService = projectService;
             _userManager = userManager;
+            _notificationService = notificationService;
         }
 
         public IActionResult Index()
@@ -67,6 +69,17 @@ namespace IssueTracker.Controllers
                 involvedPersons.Add(user);
                 var issueLog = BuildIssueLogForCreate(issueLogListingModel, user, involvedPersons);
                 _issueLogService.Create(issueLog);
+                foreach(var p in issueLog.IssueLogInvolvedPersons.Where(x => x.InvolvedPerson.Id != user.Id))
+                {
+                    var notification = new Notification
+                    {
+                        UserFrom = user.Id,
+                        UserFromImage = user.ProfileImageUrl,
+                        UserTo = p.InvolvedPerson.Id,
+                        Message = "New issue has been raised for you - " + "\"" + issueLog.Header + "\"" + " by " + p.InvolvedPerson.UserName
+                    };
+                    _notificationService.Create(notification);
+                }
 
                 return Json(new
                 {
