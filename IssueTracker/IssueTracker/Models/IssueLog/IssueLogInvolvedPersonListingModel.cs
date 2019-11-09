@@ -22,13 +22,18 @@ namespace IssueTracker.Models
         public string EmailAddress { get; set; }
         public string Designation { get; set; }
 
+        [Display(Name = "Project Name")]
         public string ProjectName { get; set; }
+        [Display(Name = "Company Name")]
         public string CompanyName { get; set; }
+        [Display(Name = "Raised By Name")]
         public string RaisedByName { get; set; }
         public string OtherInvolvedPersons { get; set; }
 
         [DataType(DataType.Date)]
+        [Display(Name = "Expected Date")]
         public DateTime? ExpectedDate { get; set; }
+        [Display(Name = "Issue Type")]
         public string IssueType { get; set; }
 
         public string Title { get; set; }

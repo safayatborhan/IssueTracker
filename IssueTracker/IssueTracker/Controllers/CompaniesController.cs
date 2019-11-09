@@ -153,7 +153,9 @@ namespace IssueTracker.Controllers
                 return NotFound();
             }
 
-            return View(company);
+            _context.Company.Remove(company);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Companies/Delete/5

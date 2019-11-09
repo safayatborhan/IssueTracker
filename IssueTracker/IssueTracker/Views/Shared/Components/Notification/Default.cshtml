@@ -1,0 +1,32 @@
+﻿@model IssueTracker.Models.NotificationListingModel
+<!-- Messages: style can be found in dropdown.less-->
+<li class="dropdown messages-menu">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-bell-o"></i>
+        <span class="label label-success">@Model.NotificationCount</span>
+    </a>
+    <ul class="dropdown-menu">
+        <li class="header">You have @Model.NotificationCount Notifications</li>
+        <li>
+            <!-- inner menu: contains the actual data -->
+            <ul class="menu">
+                @foreach (var notification in Model.Notifications)
+                {
+                    <li>
+                        <!-- start message -->
+                        <a asp-controller="InvolvedPerson" asp-action="NotificationHit" asp-route-id="@notification.Id">
+                            <div class="pull-left">
+                                <img src="~/uploads/@notification.ImageUrl" class="img-circle" alt="User Image">
+                            </div>
+                            <h4>
+                                @notification.Header
+                            </h4>
+                            <p>@notification.Messages</p>
+                        </a>
+                    </li>
+                    <!-- end message -->
+                }
+            </ul>
+        </li>
+    </ul>
+</li>

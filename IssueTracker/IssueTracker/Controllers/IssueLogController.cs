@@ -76,7 +76,9 @@ namespace IssueTracker.Controllers
                         UserFrom = user.Id,
                         UserFromImage = user.ProfileImageUrl,
                         UserTo = p.InvolvedPerson.Id,
-                        Message = "New issue has been raised for you - " + "\"" + issueLog.Header + "\"" + " by " + p.InvolvedPerson.UserName
+                        Header = issueLog.Project.Name + "(" + issueLog.Project.Company.Name + ")",
+                        Message = issueLog.Header,
+                        IsRead = false
                     };
                     _notificationService.Create(notification);
                 }

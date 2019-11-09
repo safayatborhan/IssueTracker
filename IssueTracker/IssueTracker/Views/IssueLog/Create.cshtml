@@ -4,60 +4,86 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Create</h2>
-
-<h4>Issue Log</h4>
+<style>
+    label.error {
+        color: red;
+    }
+</style>
+<h2 class="text-center">Raise New Issue</h2>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form>
+<form id="issueLogForm">
+    <div class="row">
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="CompanyId" class="control-label"></label>
-                <select id="comboCompany" asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Id", "Name"))" class="form-control">
+                <select id="comboCompany" name="comboCompany" asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Id", "Name"))" class="form-control">
                     <option value="">Select a company</option>
                 </select>
                 <span asp-validation-for="CompanyId" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="ProjectId" class="control-label"></label>
-                <select asp-for="ProjectId" id="comboProject" class="form-control"></select>
+                <select asp-for="ProjectId" id="comboProject" name="comboProject" class="form-control"></select>
                 <span asp-validation-for="ProjectId" class="text-danger"></span>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="Header" class="control-label"></label>
-                <input asp-for="Header" id="txtHeader" class="form-control" />
+                <input asp-for="Header" id="txtHeader" name="txtHeader" class="form-control" />
                 <span asp-validation-for="Header" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="IssueDate" class="control-label"></label>
+                <input asp-for="IssueDate" id="dtpIssueDate" name="dtpIssueDate" class="form-control" />
+                <span asp-validation-for="IssueDate" class="text-danger"></span>
+            </div>
+        </div>        
+    </div>    
+    <div class="row">
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="Body" class="control-label"></label>
-                <textarea asp-for="Body" id="txtBody" class="form-control" rows="2"></textarea>
+                <textarea asp-for="Body" id="txtBody" name="txtBody" class="form-control" rows="2"></textarea>
                 <span asp-validation-for="Body" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="Note" class="control-label"></label>
                 <textarea asp-for="Note" id="txtNote" class="form-control" rows="2"></textarea>
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="IssueDate" class="control-label"></label>
-                <input asp-for="IssueDate" id="dtpIssueDate" class="form-control" />
-                <span asp-validation-for="IssueDate" class="text-danger"></span>
-            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="Priority" class="control-label"></label>
-                <select asp-for="Priority" id="comboPriority" asp-items="Html.GetEnumSelectList<EnumIssuePriority>()" class="form-control">
+                <select asp-for="Priority" id="comboPriority" name="comboPriority" asp-items="Html.GetEnumSelectList<EnumIssuePriority>()" class="form-control">
                     <option selected="selected" value="">Select a priority</option>
                 </select>
                 <span asp-validation-for="Priority" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="IssueType" class="control-label"></label>
-                <select asp-for="IssueType" id="comboIssueType" asp-items="Html.GetEnumSelectList<EnumIssueType>()" class="form-control">
+                <select asp-for="IssueType" id="comboIssueType" name="comboIssueType" asp-items="Html.GetEnumSelectList<EnumIssueType>()" class="form-control">
                     <option selected="selected" value="">Select a type</option>
                 </select>
                 <span asp-validation-for="IssueType" class="text-danger"></span>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="IssueLogInvolvedPersonId" class="control-label"></label>
                 <select id="comboInvolvedPerson" asp-for="IssueLogInvolvedPersonId" asp-items="@(new SelectList(Model.ApplicationUserListingModels, "Id", "Name"))" class="form-control">
@@ -76,17 +102,26 @@
                     <tbody></tbody>
                 </table>
             </div>
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="TaskHour" class="control-label"></label>
-                <input asp-for="TaskHour" id="txtTaskHour" class="form-control" />
+                <input type="number" asp-for="TaskHour" id="txtTaskHour" name="txtTaskHour" class="form-control" />
                 <span asp-validation-for="TaskHour" class="text-danger"></span>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
             <div class="form-group">
                 <input type="button" id="btnSubmit" value="Create" class="btn btn-default" />
             </div>
-        </form>
-    </div>
-</div>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+    </div>    
+</form>
 
 <div>
     <a asp-action="Index">Back to List</a>
@@ -134,45 +169,92 @@
 
         });
 
-        $("#btnSubmit").click(function () {
-            var involvedPersons = new Array();
-            var issueLogListingModel = {};
-
-            issueLogListingModel.ProjectId = $("#comboProject").val();
-            issueLogListingModel.IssueDate = $("#dtpIssueDate").val();
-            issueLogListingModel.Header = $("#txtHeader").val();
-            issueLogListingModel.Body = $("#txtBody").val();
-            issueLogListingModel.Note = $("#txtNote").val();
-            issueLogListingModel.Priority = $("#comboPriority").val();
-            issueLogListingModel.TaskHour = $("#txtTaskHour").val();
-            issueLogListingModel.IssueType = $("#comboIssueType").val();
-
-            $("#tableIssueInvolvedPerson tbody tr").each(function () {
-                var row = $(this);
-                involvedPersons.push(row.find("td").eq(0).html());
-            });
-            issueLogListingModel.IssueLogInvolvedPersonIds = involvedPersons;
-
-            $.ajax({
-                type: "POST",
-                url: "/IssueLog/Create",
-                data: JSON.stringify({
-                    'ProjectId': issueLogListingModel.ProjectId,
-                    'IssueDate': issueLogListingModel.IssueDate,
-                    'Header': issueLogListingModel.Header,
-                    'Body': issueLogListingModel.Body,
-                    'Note': issueLogListingModel.Note,
-                    'Priority': issueLogListingModel.Priority,
-                    'TaskHour': issueLogListingModel.TaskHour,
-                    'IssueType': issueLogListingModel.IssueType,
-                    'IssueLogInvolvedPersonIds': issueLogListingModel.IssueLogInvolvedPersonIds.join()
-                }),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (data) {
-                    window.location.href = data.redirectTo;
+        $("#issueLogForm").validate({
+            rules: {
+                comboProject: {
+                    required: true
+                },
+                dtpIssueDate: {
+                    required: true
+                },
+                txtHeader: {
+                    required: true
+                },
+                comboPriority: {
+                    required: true
+                },
+                txtTaskHour: {
+                    required: true
+                },
+                comboIssueType: {
+                    required: true
                 }
-            });
+            },
+            messages: {
+                comboProject: {
+                    required: "Project is required!!!"
+                },
+                dtpIssueDate: {
+                    required: "Expected date is required!!!"
+                },
+                txtHeader: {
+                    required: "Header is required!!!"
+                },
+                comboPriority: {
+                    required: "Priority is required!!!"
+                },
+                txtTaskHour: {
+                    required: "Expected hour is required!!!"
+                },
+                comboIssueType: {
+                    required: "Issue type is required!!!"
+                }
+            },
+            submitHandler: function (form) {
+                var involvedPersons = new Array();
+                var issueLogListingModel = {};
+
+                issueLogListingModel.ProjectId = $("#comboProject").val();
+                issueLogListingModel.IssueDate = $("#dtpIssueDate").val();
+                issueLogListingModel.Header = $("#txtHeader").val();
+                issueLogListingModel.Body = $("#txtBody").val();
+                issueLogListingModel.Note = $("#txtNote").val();
+                issueLogListingModel.Priority = $("#comboPriority").val();
+                issueLogListingModel.TaskHour = $("#txtTaskHour").val();
+                issueLogListingModel.IssueType = $("#comboIssueType").val();
+
+                $("#tableIssueInvolvedPerson tbody tr").each(function () {
+                    var row = $(this);
+                    involvedPersons.push(row.find("td").eq(0).html());
+                });
+                issueLogListingModel.IssueLogInvolvedPersonIds = involvedPersons;
+
+                $.ajax({
+                    type: "POST",
+                    url: "/IssueLog/Create",
+                    data: JSON.stringify({
+                        'ProjectId': issueLogListingModel.ProjectId,
+                        'IssueDate': issueLogListingModel.IssueDate,
+                        'Header': issueLogListingModel.Header,
+                        'Body': issueLogListingModel.Body,
+                        'Note': issueLogListingModel.Note,
+                        'Priority': issueLogListingModel.Priority,
+                        'TaskHour': issueLogListingModel.TaskHour,
+                        'IssueType': issueLogListingModel.IssueType,
+                        'IssueLogInvolvedPersonIds': issueLogListingModel.IssueLogInvolvedPersonIds.join()
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        window.location.href = data.redirectTo;
+                    }
+                });
+                return false;  // blocks regular submit since you have ajax
+            }
+        });
+
+        $("#btnSubmit").click(function () {
+            $('#issueLogForm').submit();
         });
     });
 </script>

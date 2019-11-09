@@ -73,7 +73,7 @@ using IssueTracker.Models;
             WriteLiteral("    <h2 class=\"text-center\">Assigned Issues</h2>\r\n    <div>\r\n        ");
             EndContext();
             BeginContext(257, 159, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cd626c3afb6e44919bb376955d14def9", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c0339e2ffd624f71ac189bd0586f1aed", async() => {
                 BeginContext(321, 88, true);
                 WriteLiteral("\r\n            <input type=\"text\" class=\"homeSearch\" placeholder=\"Search...\" />\r\n        ");
                 EndContext();

@@ -47,7 +47,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label asp-for="Detail"></label>
-                                <input asp-for="Detail" class="form-control" readonly />
+                                <textarea asp-for="Detail" class="form-control" rows="4" readonly></textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -70,7 +70,7 @@
                                     <label></label>
                                     @if (Model.ReceiveDate == null)
                                     {
-                                        <input type="submit" value="Start" class="btn btn-info" />
+                                        <input style="margin-top: 4px;" type="submit" value="Start" class="btn btn-info" />
                                     }
                                 </div>
                             </div>
@@ -79,7 +79,7 @@
                                     <label></label>
                                     @if (Model.ReceiveDate != null)
                                     {
-                                        <input type="submit" value="Complete" class="btn btn-primary" />
+                                        <input style="margin-top: 4px;" type="submit" value="Complete" class="btn btn-primary" />
                                     }
                                 </div>
                             </div>

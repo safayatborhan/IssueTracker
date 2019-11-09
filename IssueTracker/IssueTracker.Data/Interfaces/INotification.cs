@@ -10,5 +10,7 @@ namespace IssueTracker.Data
     {
         IEnumerable<Notification> GetUserNotification(string userId);
         void Create(Notification notification);
+        Notification GetById(int id);
+        void Update(Notification notification);
     }
 }

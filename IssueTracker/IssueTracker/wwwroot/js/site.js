@@ -27,3 +27,10 @@
         });
     });
 });
+
+$(document).ready(function () {
+    $('#dtCompany').DataTable();
+    $('#dtDesignation').DataTable();
+    $('#dtProject').DataTable();
+    $('#dtIssue').DataTable();
+});

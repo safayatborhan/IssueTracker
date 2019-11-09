@@ -23,11 +23,11 @@ namespace IssueTracker.Service.Services
             await _context.SaveChangesAsync();
         }
 
-        public async void Delete(int id)
+        public void Delete(int id)
         {
             var project = _context.Project.Where(x => x.Id == id).FirstOrDefault();
             _context.Project.Remove(project);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public async Task Edit(Project Project)

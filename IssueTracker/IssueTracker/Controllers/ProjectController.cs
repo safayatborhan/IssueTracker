@@ -58,6 +58,8 @@ namespace IssueTracker.Controllers
                 
                 return RedirectToAction(nameof(Index));
             }
+            var companies = BuildCompanyList();
+            model.Companies = companies;
             return View(model);
         }
 

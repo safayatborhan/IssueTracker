@@ -202,6 +202,10 @@ namespace IssueTracker.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Header");
+
+                    b.Property<bool>("IsRead");
+
                     b.Property<string>("Message");
 
                     b.Property<string>("UserFrom");

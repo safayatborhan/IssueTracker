@@ -44,14 +44,16 @@ namespace IssueTracker.Controllers
             return View(new DesignationCreateModel());
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(DesignationCreateModel model)
         {
             if (ModelState.IsValid)
             {
                 var desgination = BuildDesignation(model);
-                await _designationService.Create(desgination);                
+                await _designationService.Create(desgination);
+                return RedirectToAction("Index", "Designation");
             }
-            return RedirectToAction("Index", "Designation");
+            return View(model);
         }
 
         public IActionResult Edit(int id)
@@ -67,11 +69,16 @@ namespace IssueTracker.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(DesignationListingModel model)
         {
-            var desgination = BuildDesignation(model);
-            await _designationService.Edit(desgination);
-            return RedirectToAction("Index", "Designation");
+            if (ModelState.IsValid)
+            {
+                var desgination = BuildDesignation(model);
+                await _designationService.Edit(desgination);
+                return RedirectToAction("Index", "Designation");
+            }
+            return View(model);
         }
 
         private Designation BuildDesignation(DesignationCreateModel model)

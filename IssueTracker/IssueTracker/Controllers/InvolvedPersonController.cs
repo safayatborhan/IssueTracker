@@ -16,11 +16,13 @@ namespace IssueTracker.Controllers
     {
         private static UserManager<ApplicationUser> _userManager;
         private readonly IInvolvedPerson _involvedPersonService;
+        private readonly INotification _notificationService;
 
-        public InvolvedPersonController(IInvolvedPerson involvedPersonService, UserManager<ApplicationUser> userManager)
+        public InvolvedPersonController(IInvolvedPerson involvedPersonService, UserManager<ApplicationUser> userManager, INotification notificationService)
         {
             _involvedPersonService = involvedPersonService;
             _userManager = userManager;
+            _notificationService = notificationService;
         }
 
         [Authorize]
@@ -38,6 +40,14 @@ namespace IssueTracker.Controllers
             var issuelogInvolvedPerson = _involvedPersonService.GetById(id);
             var model = BuildAssignedIssueModel(issuelogInvolvedPerson);
             return PartialView("_InvolvedPersonModalPartial", model);
+        }
+
+        public IActionResult NotificationHit(int id)
+        {
+            var notification = _notificationService.GetById(id);
+            notification.IsRead = true;
+            _notificationService.Update(notification);
+            return RedirectToAction("Index", "InvolvedPerson");
         }
 
         [HttpPost]
