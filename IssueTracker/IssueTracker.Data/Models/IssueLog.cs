@@ -20,5 +20,6 @@ namespace IssueTracker.Data.Models
         public EnumIssuePriority Priority { get; set; }
         public double TaskHour { get; set; }
         public EnumIssueType IssueType { get; set; }
+        public bool IsComplete { get; set; }
     }
 }

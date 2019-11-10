@@ -34,27 +34,33 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CompanyName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IssueDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Header)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IssueInvolvedPersonsName)
-                </td>
-                <td>
-                    <a class="btn btn-xs btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> |
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssueDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Header)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssueInvolvedPersonsName)
+            </td>          
+            <td>
+                @if (item.CurrentLoginUserId == item.EntryById)
+                {
+                    <a class="btn btn-xs btn-primary" style="background-color:greenyellow" asp-action="Complete" asp-route-id="@item.Id"><i class="fa fa-power-off" aria-hidden="true"></i></a> 
+                    <a class="btn btn-xs btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                     <a class="btn btn-xs btn-danger" asp-action="Delete" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to delete this project?')"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                </td>
-            </tr>
+                }
+
+
+            </td>          
+        </tr>
         }
     </tbody>
 </table>

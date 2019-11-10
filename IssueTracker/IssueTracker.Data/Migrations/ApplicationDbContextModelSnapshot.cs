@@ -146,6 +146,8 @@ namespace IssueTracker.Data.Migrations
 
                     b.Property<string>("Header");
 
+                    b.Property<bool>("IsComplete");
+
                     b.Property<DateTime>("IssueDate");
 
                     b.Property<int>("IssueType");
@@ -180,6 +182,8 @@ namespace IssueTracker.Data.Migrations
                     b.Property<double>("HoursToComplete");
 
                     b.Property<string>("InvolvedPersonId");
+
+                    b.Property<bool>("IsComplete");
 
                     b.Property<int?>("IssueLogId");
 

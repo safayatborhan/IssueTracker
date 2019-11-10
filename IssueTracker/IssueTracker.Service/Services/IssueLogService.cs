@@ -23,6 +23,12 @@ namespace IssueTracker.Service.Services
             throw new NotImplementedException();
         }
 
+        public void Complete(IssueLog issueLog)
+        {
+            _context.IssueLog.Update(issueLog);
+            _context.SaveChanges();
+        }
+
         public void Create(IssueLog issueLog)
         {
             _context.IssueLog.Add(issueLog);
@@ -63,7 +69,8 @@ namespace IssueTracker.Service.Services
             issueLogSaved.IssueLogInvolvedPersons = issueLog.IssueLogInvolvedPersons;
             issueLogSaved.Priority = issueLog.Priority;
             issueLogSaved.TaskHour = issueLog.TaskHour;
-            issueLogSaved.IssueType = issueLog.IssueType;            
+            issueLogSaved.IssueType = issueLog.IssueType;
+            issueLogSaved.IsComplete = issueLog.IsComplete;
 
             //_context.IssueLog.Update(issueLogSaved);
 

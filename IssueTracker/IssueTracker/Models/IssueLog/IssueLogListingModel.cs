@@ -55,5 +55,7 @@ namespace IssueTracker.Models
         public IEnumerable<ProjectListingModel> Projects { get; set; }
         public IEnumerable<CompanyListingModel> Companies { get; set; } 
         public IEnumerable<ApplicationUserListingModel> ApplicationUserListingModels { get; set; }
+
+        public string CurrentLoginUserId { get; set; }
     }
 }

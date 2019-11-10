@@ -29,7 +29,7 @@ namespace IssueTracker.Controllers
 
         public IActionResult Index()
         {
-            var issueLogs = _issueLogService.GetAll();
+            var issueLogs = _issueLogService.GetAll().Where(x => x.IsComplete == false).OrderByDescending(x => x.AssignDate).ToList();
             var model = BuildIssueLogIndex(issueLogs);
             return View(model);
         }
@@ -109,6 +109,19 @@ namespace IssueTracker.Controllers
                 return NotFound();
             }
             return View(model);
+        }
+
+        [Authorize]
+        public IActionResult Complete(int id)
+        {
+            var issueLog = _issueLogService.GetById((int)id);
+            issueLog.IsComplete = true;
+            foreach(var ip in issueLog.IssueLogInvolvedPersons)
+            {
+                ip.IsComplete = true;
+            }
+            _issueLogService.Complete(issueLog);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
@@ -305,7 +318,9 @@ namespace IssueTracker.Controllers
                 CompanyName = x.Project.Company.Name,
                 IssueDate = x.IssueDate != DateTime.MinValue ? (DateTime?)x.IssueDate : null,
                 Header = x.Header,
-                IssueInvolvedPersonsName = String.Join(", ",x.IssueLogInvolvedPersons.Select(y => y.InvolvedPerson.UserName))
+                IssueInvolvedPersonsName = String.Join(", ",x.IssueLogInvolvedPersons.Select(y => y.InvolvedPerson.UserName)),
+                EntryById = x.EntryBy.Id,
+                CurrentLoginUserId = _userManager.GetUserId(User)
             });
             return model;
         }

@@ -12,6 +12,7 @@ namespace IssueTracker.Data.Models
         public double ExpectedHour { get; set; }
         public DateTime ReceiveDate { get; set; }
         public string ReceiveRemarks { get; set; }
+        public bool IsComplete { get; set; }
 
         public IssueLog IssueLog{ get; set; }
     }

@@ -12,6 +12,7 @@ namespace IssueTracker.Data
         IEnumerable<IssueLog> GetAll();
         void Create(IssueLog Project);
         void Edit(IssueLog Project);
+        void Complete(IssueLog issueLog);
         void Delete(int id);
 
         Task AddInvolvedPersons(IEnumerable<IssueLogInvolvedPerson> issueLogInvolvedPersons);

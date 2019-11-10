@@ -12,7 +12,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form asp-action="View">
+                <form id="involvedPersonForm" asp-action="View">
                     <input id="txtId" type="hidden" asp-for="Id" />
                     <input id="txtIsStartOrComplete" type="hidden" asp-for="IsStart" />
                     <div class="row">
@@ -52,8 +52,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label asp-for="Priority"></label>
-                                <input asp-for="Priority" class="form-control" readonly />
+                                <label asp-for="Note"></label>
+                                <textarea asp-for="Note" class="form-control" rows="4" readonly></textarea>
                             </div>
                         </div>
                     </div>
@@ -65,28 +65,48 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label></label>
-                                    @if (Model.ReceiveDate == null)
-                                    {
-                                        <input style="margin-top: 4px;" type="submit" value="Start" class="btn btn-info" />
-                                    }
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label></label>
-                                    @if (Model.ReceiveDate != null)
-                                    {
-                                        <input style="margin-top: 4px;" type="submit" value="Complete" class="btn btn-primary" />
-                                    }
-                                </div>
+                            <div class="form-group">
+                                <label asp-for="Priority"></label>
+                                <input asp-for="Priority" class="form-control" readonly />
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+
+                        @if (Model.ReceiveDate == null)
+                        {
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="submit" value="Start" class="btn btn-info" />
+                                </div>
+                            </div>
+                        }
+                        @if (Model.ReceiveDate != null)
+                        {
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <input asp-for="HoursToComplete" id="txtHoursToComplete" type="number" placeholder="Hours" class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    <input id="btnSubmit" type="submit" value="Complete" class="btn btn-primary" />
+                                </div>
+                            </div>                                                       
+                        }
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#btnSubmit').attr('disabled', true);
+        $('#txtHoursToComplete').keyup(function () {
+            if ($(this).val().length != 0 && $(this).val() > 0)
+                $('#btnSubmit').attr('disabled', false);
+            else
+                $('#btnSubmit').attr('disabled', true);
+        })
+    });
+</script>

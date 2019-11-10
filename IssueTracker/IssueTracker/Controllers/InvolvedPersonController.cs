@@ -29,7 +29,7 @@ namespace IssueTracker.Controllers
         public IActionResult Index()
         {
             var userId = _userManager.GetUserId(User);
-            var involvedPersons = _involvedPersonService.GetAllLogs(userId);
+            var involvedPersons = _involvedPersonService.GetAllLogs(userId).Where(x => x.IsComplete == false).OrderBy(x => x.IssueLog.IssueDate);
             var model = BuildInvolvedPersonIndex(involvedPersons);
             return View(model);
         }
@@ -54,10 +54,10 @@ namespace IssueTracker.Controllers
         public async Task<IActionResult> View(IssueLogInvolvedPersonListingModel model)
         {
             var issuelogInvolvedPerson = _involvedPersonService.GetById(model.Id);
-            if(model.IsStart)
+            if (model.IsStart)
                 issuelogInvolvedPerson.ReceiveDate = DateTime.Now;
             else
-                issuelogInvolvedPerson.HoursToComplete = (DateTime.Now - issuelogInvolvedPerson.ReceiveDate).TotalHours;
+                issuelogInvolvedPerson.IsComplete = true;
             await _involvedPersonService.UpdateIssueLog(issuelogInvolvedPerson);
             return RedirectToAction("Index", "InvolvedPerson");
         }
@@ -73,6 +73,7 @@ namespace IssueTracker.Controllers
                 ExpectedDate = p.IssueLog.IssueDate,
                 Title = p.IssueLog.Header,
                 Detail = p.IssueLog.Body,
+                Note = p.IssueLog.Note,
                 Priority = p.IssueLog.Priority.ToString(),
                 IssueType = p.IssueLog.IssueType.ToString(),
                 ReceiveDate = p.ReceiveDate != DateTime.MinValue ? (DateTime?)p.ReceiveDate : null,
