@@ -320,7 +320,8 @@ namespace IssueTracker.Controllers
                 Header = x.Header,
                 IssueInvolvedPersonsName = String.Join(", ",x.IssueLogInvolvedPersons.Select(y => y.InvolvedPerson.UserName)),
                 EntryById = x.EntryBy.Id,
-                CurrentLoginUserId = _userManager.GetUserId(User)
+                CurrentLoginUserId = _userManager.GetUserId(User),
+                IsAllInvolvedPersonCompleted = x.IssueLogInvolvedPersons.Where(y => y.IsComplete).ToList().Count == x.IssueLogInvolvedPersons.Count()
             });
             return model;
         }

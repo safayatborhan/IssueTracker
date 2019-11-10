@@ -33,4 +33,11 @@ $(document).ready(function () {
     $('#dtDesignation').DataTable();
     $('#dtProject').DataTable();
     $('#dtIssue').DataTable();
+    $('#dtEmployeeWorkDetail').DataTable(
+        {
+            dom: 'Bfrtip',
+            buttons: [
+                'excel', 'pdf', 'print'
+            ]
+        });
 });

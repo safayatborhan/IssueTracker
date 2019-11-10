@@ -17,6 +17,21 @@ namespace IssueTracker.Service.Services
             _context = context;
         }
 
+        public IEnumerable<IssueLogInvolvedPerson> GetAll()
+        {
+            var issueLogInvolvedPersons = _context.IssueLogInvolvedPerson
+                .Include(x => x.InvolvedPerson)
+                    .ThenInclude(y => y.Designation)
+                .Include(x => x.IssueLog)
+                    .ThenInclude(y => y.EntryBy)
+                        .ThenInclude(z => z.Designation)
+                .Include(x => x.IssueLog)
+                        .ThenInclude(y => y.Project)
+                        .ThenInclude(k => k.Company)
+                .ToList();
+            return issueLogInvolvedPersons;
+        }
+
         public IEnumerable<IssueLogInvolvedPerson> GetAllLogs(string userId)
         {
             var issueLogInvolvedPersons = _context.IssueLogInvolvedPerson.Where(x => x.InvolvedPerson.Id == userId)

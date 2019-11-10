@@ -57,5 +57,6 @@ namespace IssueTracker.Models
         public IEnumerable<ApplicationUserListingModel> ApplicationUserListingModels { get; set; }
 
         public string CurrentLoginUserId { get; set; }
+        public bool IsAllInvolvedPersonCompleted { get; set; }
     }
 }

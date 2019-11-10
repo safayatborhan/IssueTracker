@@ -57,7 +57,10 @@ namespace IssueTracker.Controllers
             if (model.IsStart)
                 issuelogInvolvedPerson.ReceiveDate = DateTime.Now;
             else
+            {
                 issuelogInvolvedPerson.IsComplete = true;
+                issuelogInvolvedPerson.HoursToComplete = model.HoursToComplete;
+            }                
             await _involvedPersonService.UpdateIssueLog(issuelogInvolvedPerson);
             return RedirectToAction("Index", "InvolvedPerson");
         }

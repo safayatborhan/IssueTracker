@@ -1,0 +1,82 @@
+﻿@model IssueTracker.Models.EmployeeWorkDetail
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    label.error {
+        color: red;
+    }
+</style>
+<h2 class="text-center">Employee Work Detail</h2>
+<hr />
+<form id="issueLogForm">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <select id="comboUser" name="comboUser" asp-for="Id" asp-items="@(new SelectList(Model.EmployeeWorkDetailUsers, "Id", "Name"))" class="form-control">
+                    <option value="">Select a user</option>
+                </select>
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+        </div> 
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="button" id="btnSubmit" value="Search" class="btn btn-default" />
+            </div>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-md-12">
+        <table id="dtEmployeeWorkDetail" class="ui celled table" style="margin-left: 5px;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Project</th>
+                    <th>Company</th>
+                    <th>Work</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.EmployeeWorkHourDetailList)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Project)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Company)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Work)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Time)
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+
+
+
