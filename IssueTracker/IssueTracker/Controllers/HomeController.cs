@@ -34,9 +34,9 @@ namespace IssueTracker.Controllers
 
         private IssueLogHomeIndexModel BuildHomeIssueLogIndex(IOrderedEnumerable<IssueLogInvolvedPerson> involvedPersons)
         {
-            var deadlineMissedIssues = involvedPersons.Where(x => x.IssueLog.IssueDate < DateTime.Now).ToList();
-            var todaysIssues = involvedPersons.Where(x => x.IssueLog.IssueDate == DateTime.Now).ToList();
-            var upcomingIssues = involvedPersons.Where(x => x.IssueLog.IssueDate > DateTime.Now).ToList();
+            var deadlineMissedIssues = involvedPersons.Where(x => x.IssueLog.IssueDate.Date < DateTime.Now.Date).ToList();
+            var todaysIssues = involvedPersons.Where(x => x.IssueLog.IssueDate.Date == DateTime.Now.Date).ToList();
+            var upcomingIssues = involvedPersons.Where(x => x.IssueLog.IssueDate.Date > DateTime.Now.Date).ToList();
             var model = new IssueLogHomeIndexModel
             {
                 WelcomeMessage = "Good " + ((DateTime.Now.TimeOfDay >= TimeSpan.Parse("4:00") && DateTime.Now.TimeOfDay <= TimeSpan.Parse("12:00")) ? "morning" : (DateTime.Now.TimeOfDay >= TimeSpan.Parse("12:01") && DateTime.Now.TimeOfDay <= TimeSpan.Parse("16:00") ? "afternoon" : "evening")) + " " + _userManager.GetUserName(User).ToString() + "!!",

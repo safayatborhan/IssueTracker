@@ -43,5 +43,7 @@ namespace IssueTracker.Models
         public bool IsStart { get; set; }
         public string RaisedByImageUrl { get; set; }
         public string Note { get; set; }
+
+        public List<string> OtherWorkingStatus { get; set; }
     }
 }

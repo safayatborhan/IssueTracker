@@ -75,9 +75,22 @@
 
                         @if (Model.ReceiveDate == null)
                         {
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="submit" value="Start" class="btn btn-info" />
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <input asp-for="ExpectedHour" id="txtExpectedHour" type="number" placeholder="Hours" class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    <input id="btnStart" type="submit" value="Start" class="btn btn-info" />
+                                </div>
+                                <div class="col-md-7">
+                                    <table>
+                                        @foreach(var otherWorkingStatus in Model.OtherWorkingStatus)
+                                        {
+                                            <tr>
+                                                <td>* @otherWorkingStatus</td>
+                                            </tr>
+                                        }
+                                    </table>
                                 </div>
                             </div>
                         }
@@ -90,7 +103,17 @@
                                 <div class="col-md-2">
                                     <input id="btnSubmit" type="submit" value="Complete" class="btn btn-primary" />
                                 </div>
-                            </div>                                                       
+                                <div class="col-md-7">
+                                    <table>
+                                        @foreach (var otherWorkingStatus in Model.OtherWorkingStatus)
+                                        {
+                                            <tr>
+                                                <td>* @otherWorkingStatus</td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
                         }
                     </div>
                 </form>
@@ -107,6 +130,14 @@
                 $('#btnSubmit').attr('disabled', false);
             else
                 $('#btnSubmit').attr('disabled', true);
+        })
+
+        $('#btnStart').attr('disabled', true);
+        $('#txtExpectedHour').keyup(function () {
+            if ($(this).val().length != 0 && $(this).val() > 0)
+                $('#btnStart').attr('disabled', false);
+            else
+                $('#btnStart').attr('disabled', true);
         })
     });
 </script>

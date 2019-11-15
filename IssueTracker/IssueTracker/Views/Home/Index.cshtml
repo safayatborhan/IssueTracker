@@ -112,7 +112,7 @@
         overflow: hidden;
         top: 0;
         right: 0;
-        background-color: #FF4136;
+        background-color: #FF7381;
         border-radius: 0 4px 0 32px;
     }
 
@@ -133,7 +133,7 @@
         overflow: hidden;
         top: 0;
         right: 0;
-        background-color: #00838d;
+        background-color: #2CCAFA;
         border-radius: 0 4px 0 32px;
     }
 
@@ -154,7 +154,7 @@
         overflow: hidden;
         top: 0;
         right: 0;
-        background-color: #01FF70;
+        background-color: #FFE01B;
         border-radius: 0 4px 0 32px;
     }
 
@@ -185,7 +185,7 @@
             z-index: -1;
             top: -16px;
             right: -16px;
-            background: #FF4136;
+            background: #FF7381;
             height: 32px;
             width: 32px;
             transform: scale(1);
@@ -234,7 +234,7 @@
             z-index: -1;
             top: -16px;
             right: -16px;
-            background: #00838d;
+            background: #2CCAFA;
             height: 32px;
             width: 32px;
             transform: scale(1);
@@ -282,7 +282,7 @@
             z-index: -1;
             top: -16px;
             right: -16px;
-            background: #01FF70;
+            background: #FFE01B;
             height: 32px;
             width: 32px;
             transform: scale(1);
@@ -338,7 +338,7 @@
     <br />
     <div class="row" style="padding-right:115px;margin-left:-40px;">
         <div class="col-md-4 text-center">
-            <a class="card1" href="#">
+            <a class="card1" asp-controller="InvolvedPerson" asp-action="Index" asp-route-id="1">
                 @if (Model.DeadlineMissedCount == 0)
                 {
                     <h3>You don't have any task that missed deadline. Good Job!!</h3>
@@ -350,7 +350,7 @@
                     <ul>
                         @foreach (var text in Model.DeadlineMissedIssues)
                         {
-                            <li class="small">@text</li>
+                            <li class="small">@text.Text</li>
                         }
                     </ul>
                 }
@@ -363,7 +363,7 @@
             </a>
         </div>
         <div class="col-md-4 text-center">
-            <a class="card2" href="#">
+            <a class="card2" asp-controller="InvolvedPerson" asp-action="Index" asp-route-id="2">
                 @if (Model.TodaysIssueCount == 0)
                 {
                     <h3>You don't have any deadline today till now...</h3>
@@ -375,7 +375,7 @@
                     <ul>
                         @foreach (var text in Model.TodaysIssues)
                         {
-                            <li class="small">@text</li>
+                            <li class="small">@text.Text</li>
                         }
                     </ul>
                 }
@@ -387,14 +387,14 @@
             </a>
         </div>
         <div class="col-md-4 text-center">
-            <a class="card3" href="#">
+            <a class="card3" asp-controller="InvolvedPerson" asp-action="Index" asp-route-id="3">
                 @if (Model.UpcomingIssueCount == 0)
                 {
                     <h3>You don't have any deadline in this week.</h3>
                 }
                 else
                 {
-                    <h3>Upcoming</h3>
+                    <h3>Deadline coming soon!!</h3>
                     <p class="small">You have @Model.UpcomingIssueCount tasks to complete afterwards...</p>
                     <ul>
                         @foreach (var text in Model.UpcomingIssues)

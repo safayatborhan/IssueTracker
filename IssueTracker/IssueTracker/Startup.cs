@@ -76,7 +76,7 @@ namespace IssueTracker
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=InvolvedPerson}/{action=Index}/{id?}")
+                    template: "{controller=Home}/{action=Index}/{id?}")
                     .MapRoute(
                     name: "WorkDetail",
                     template: "{controller=WorkDetail}/{action=EmployeeWorkDetail}/{id?}");

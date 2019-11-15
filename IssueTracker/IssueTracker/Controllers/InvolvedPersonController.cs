@@ -34,6 +34,25 @@ namespace IssueTracker.Controllers
             return View(model);
         }
 
+        [Authorize]
+        [HttpGet("Index/{id}")]
+        public IActionResult Index(int id)
+        {
+            // id = 1 for previous, 2 for today, 3 for next days
+            var userId = _userManager.GetUserId(User);
+            IEnumerable<IssueLogInvolvedPerson> involvedPersons = null;
+            if(id == 1)
+                involvedPersons = _involvedPersonService.GetAllLogs(userId).Where(x => x.IsComplete == false && x.IssueLog.IssueDate.Date < DateTime.Now.Date).OrderBy(x => x.IssueLog.IssueDate);
+            else if (id == 2)
+                involvedPersons = _involvedPersonService.GetAllLogs(userId).Where(x => x.IsComplete == false && x.IssueLog.IssueDate.Date == DateTime.Now.Date).OrderBy(x => x.IssueLog.IssueDate);
+            else if (id == 3)
+                involvedPersons = _involvedPersonService.GetAllLogs(userId).Where(x => x.IsComplete == false && x.IssueLog.IssueDate.Date > DateTime.Now.Date).OrderBy(x => x.IssueLog.IssueDate);
+            else
+                involvedPersons = _involvedPersonService.GetAllLogs(userId).Where(x => x.IsComplete == false).OrderBy(x => x.IssueLog.IssueDate);
+            var model = BuildInvolvedPersonIndex(involvedPersons);
+            return View(model);
+        }
+
         public IActionResult View(int id)
         {
             //int id = 85;
@@ -66,8 +85,9 @@ namespace IssueTracker.Controllers
         }
 
         private IssueLogInvolvedPersonListingModel BuildAssignedIssueModel(IssueLogInvolvedPerson issuelogInvolvedPerson)
-        {
+        {            
             var p = issuelogInvolvedPerson;
+            var otherInvolvedPersons = _involvedPersonService.GetAllByIssueLogId(p.IssueLog.Id).ToList().Where(x => x.InvolvedPerson.Id != p.InvolvedPerson.Id);
             var model = new IssueLogInvolvedPersonListingModel
             {
                 Id = p.Id,
@@ -82,6 +102,11 @@ namespace IssueTracker.Controllers
                 ReceiveDate = p.ReceiveDate != DateTime.MinValue ? (DateTime?)p.ReceiveDate : null,
                 IsStart = p.ReceiveDate != DateTime.MinValue ? false : true
             };
+            model.OtherWorkingStatus = new List<string>();
+            foreach (var involvedPerson in otherInvolvedPersons)
+            {
+                model.OtherWorkingStatus.Add(involvedPerson.InvolvedPerson.UserName +(!involvedPerson.IsComplete ? (involvedPerson.ReceiveDate != DateTime.MinValue ? " has started working on this task." : " hasn't started working on this task yet") : " has completed the assigned task"));
+            }
             return model;
         }
 
