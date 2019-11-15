@@ -34,6 +34,10 @@
                                 </span>
                                 <span>
                                     - @item.ProjectName (@item.CompanyName)
+                                    @if (item.IsAllTeamMemberCompleted)
+                                    {
+                                        <p class="small">(All of your team members except you have completed their assigned tasks.)</p>
+                                    }
                                 </span>
                                 <br />
                                 Expected date : @DateTime.Parse(item.ExpectedDate.ToString()).ToString("dd MMM yyyy")

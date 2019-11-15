@@ -45,5 +45,7 @@ namespace IssueTracker.Models
         public string Note { get; set; }
 
         public List<string> OtherWorkingStatus { get; set; }
+
+        public bool IsAllTeamMemberCompleted { get; set; }
     }
 }

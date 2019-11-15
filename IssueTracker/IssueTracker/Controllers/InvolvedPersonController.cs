@@ -73,14 +73,42 @@ namespace IssueTracker.Controllers
         public async Task<IActionResult> View(IssueLogInvolvedPersonListingModel model)
         {
             var issuelogInvolvedPerson = _involvedPersonService.GetById(model.Id);
+            var userId = _userManager.GetUserId(User);
+            var user = _userManager.FindByIdAsync(userId).Result;
+            var notification = new Notification();
             if (model.IsStart)
+            {
                 issuelogInvolvedPerson.ReceiveDate = DateTime.Now;
+                issuelogInvolvedPerson.ExpectedHour = model.ExpectedHour;
+                
+                notification = new Notification
+                {
+                    UserFrom = user.Id,
+                    UserFromImage = user.ProfileImageUrl,
+                    UserTo = issuelogInvolvedPerson.IssueLog.EntryBy.Id,
+                    Header = issuelogInvolvedPerson.IssueLog.Project.Name + "(" + issuelogInvolvedPerson.IssueLog.Project.Company.Name + ")",
+                    Message = user.UserName + " has started working on " + issuelogInvolvedPerson.IssueLog.Header + ". Expected Hour is " + model.ExpectedHour,
+                    IsRead = false
+                };
+            }                
             else
             {
                 issuelogInvolvedPerson.IsComplete = true;
                 issuelogInvolvedPerson.HoursToComplete = model.HoursToComplete;
+
+                notification = new Notification
+                {
+                    UserFrom = user.Id,
+                    UserFromImage = user.ProfileImageUrl,
+                    UserTo = issuelogInvolvedPerson.IssueLog.EntryBy.Id,
+                    Header = issuelogInvolvedPerson.IssueLog.Project.Name + "(" + issuelogInvolvedPerson.IssueLog.Project.Company.Name + ")",
+                    Message = user.UserName + " has completed this task - " + issuelogInvolvedPerson.IssueLog.Header + ". Time taken : " + model.HoursToComplete + " hours",
+                    IsRead = false
+                };
             }                
             await _involvedPersonService.UpdateIssueLog(issuelogInvolvedPerson);
+            
+            _notificationService.Create(notification);
             return RedirectToAction("Index", "InvolvedPerson");
         }
 
@@ -122,8 +150,10 @@ namespace IssueTracker.Controllers
                 ReceiveDate = x.ReceiveDate != DateTime.MinValue ? (DateTime?)x.ReceiveDate : null,
                 IssueType = x.IssueLog.IssueType.ToString(),
                 RaisedByImageUrl = x.IssueLog.EntryBy.ProfileImageUrl,
-                Title = x.IssueLog.Header
+                Title = x.IssueLog.Header,
+                IsAllTeamMemberCompleted = _involvedPersonService.GetAllByIssueLogId(x.IssueLog.Id).ToList().Where(y => y.InvolvedPerson.Id != x.InvolvedPerson.Id).All(y => y.IsComplete)
             });
+
             return model;
         }
     }
