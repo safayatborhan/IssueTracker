@@ -176,7 +176,7 @@ namespace IssueTracker.Controllers
             var issueInvolvedPerson = new
             {
                 id = user.Id,
-                name = user.UserName,
+                name = user.UserName, 
                 emailAddress = user.Email,
                 designation = user.Designation != null ? user.Designation.Name : ""
             };
