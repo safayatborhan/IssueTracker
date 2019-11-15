@@ -175,7 +175,7 @@ namespace IssueTracker.Controllers
             var user = users.Where(x => x.Id == issueInvolvedPersonId).FirstOrDefault();
             var issueInvolvedPerson = new
             {
-                id = user.Id,
+                id = user.Id, 
                 name = user.UserName, 
                 emailAddress = user.Email,
                 designation = user.Designation != null ? user.Designation.Name : ""
