@@ -7,11 +7,11 @@
 @if (Model.Any())
 {
     <h2 class="text-center">Assigned Tasks</h2>
-    <div>
-        <form asp-controller="Search" asp-action="Search" method="post">
-            <input style="margin-bottom:18px" type="text" class="homeSearch" placeholder="Search..." />
-        </form>
-    </div>
+        <div>
+            <form asp-controller="InvolvedPerson" asp-action="Search" method="post">
+                <input asp-for="@Model.FirstOrDefault().SearchQuery" style="margin-bottom:18px" type="text" class="homeSearch" placeholder="Search..." />
+            </form>
+        </div>
 
     <!-- Modal placeholder -->
     <div id="modal-placeholder"></div>
@@ -41,6 +41,7 @@
                                 </span>
                                 <br />
                                 Expected date : @DateTime.Parse(item.ExpectedDate.ToString()).ToString("dd MMM yyyy")
+                                <br />
                             </div>
                         </div>
                     </td>

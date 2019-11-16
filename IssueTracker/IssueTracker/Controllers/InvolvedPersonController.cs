@@ -70,6 +70,23 @@ namespace IssueTracker.Controllers
         }
 
         [HttpPost]
+        public IActionResult Search(string searchQuery)
+        {
+            IEnumerable<IssueLogInvolvedPerson> involvedPersons = null;
+            var userId = _userManager.GetUserId(User);
+            if(!string.IsNullOrEmpty(searchQuery))
+                involvedPersons = _involvedPersonService.GetAllLogs(userId)
+                    .Where(x => x.IsComplete == false && (x.IssueLog.Header.ToUpper().Contains(searchQuery.ToUpper()) || x.IssueLog.Project.Name.ToUpper().Contains(searchQuery.ToUpper()) || x.IssueLog.Project.Company.Name.ToUpper().Contains(searchQuery.ToUpper())))
+                    .OrderBy(x => x.IssueLog.IssueDate);
+            else
+                involvedPersons = _involvedPersonService.GetAllLogs(userId)
+                    .Where(x => x.IsComplete == false)
+                    .OrderBy(x => x.IssueLog.IssueDate);
+            var model = BuildInvolvedPersonIndex(involvedPersons);
+            return View("Index", model);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> View(IssueLogInvolvedPersonListingModel model)
         {
             var issuelogInvolvedPerson = _involvedPersonService.GetById(model.Id);
@@ -110,7 +127,7 @@ namespace IssueTracker.Controllers
             await _involvedPersonService.UpdateIssueLog(issuelogInvolvedPerson);
             
             _notificationService.Create(notification);
-            return RedirectToAction("Index", "InvolvedPerson");
+            return RedirectToAction("Index", "InvolvedPerson",new { id = 0});
         }
 
         private IssueLogInvolvedPersonListingModel BuildAssignedIssueModel(IssueLogInvolvedPerson issuelogInvolvedPerson)

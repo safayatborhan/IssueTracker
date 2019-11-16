@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using IssueTracker.Data;
 using IssueTracker.Data.Models;
@@ -57,6 +59,7 @@ namespace IssueTracker.Controllers
                 IssueType = null,
                 ApplicationUserListingModels = BuildApplicationUserList()
             };
+
             return View(model);
         }
 
@@ -91,7 +94,22 @@ namespace IssueTracker.Controllers
                     };
                     _notificationService.Create(notification);
                 }
+                //var smtpClient = new SmtpClient
+                //{
+                //    Host = "smtp.gmail.com", // set your SMTP server name here
+                //    Port = 587, // Port 
+                //    EnableSsl = true,
+                //    Credentials = new NetworkCredential("zisan94268@gmail.com", "SBsb@@##942681992fuckyouGetVirusSBsb@@##942681992fuckyou")
+                //};
 
+                //using (var message = new MailMessage("zisan94268@gmail.com", "zisan_cse_mbstu@hotmail.com")
+                //{
+                //    Subject = "Subject",
+                //    Body = "Body"
+                //})
+                //{
+                //    smtpClient.SendMailAsync(message);
+                //}
                 return Json(new
                 {
                     redirectTo = Url.Action("Index", "IssueLog")

@@ -334,9 +334,16 @@
             <img src="~/images/MyTasks.svg" />
         </div>
         <div class="col-md-6">
-            <div class="chart-container">
-                <canvas id="chartStacked" style="width:80%; height:300px"></canvas>
-            </div>
+            @if (Model.WorkListForChart.Select(x => x.LstProjectHour.Sum(w => w.Hour)).Sum() == 0)
+            {
+            <b><p class="text-center" style="margin-top:90px; color:red;font-size: large;">You didn't do anything in this month till now...</p></b>
+            }
+            else
+            {
+                <div class="chart-container">
+                    <canvas id="chartStacked" style="width:80%; height:300px"></canvas>
+                </div>
+            }
         </div>
 
     </div>

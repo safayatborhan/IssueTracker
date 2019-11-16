@@ -9,6 +9,8 @@ namespace IssueTracker.Models
 {
     public class IssueLogInvolvedPersonListingModel
     {
+        public string SearchQuery { get; set; }
+
         public int Id { get; set; }
         public ApplicationUser InvolvedPerson { get; set; }
         public string InvolvedPersonId { get; set; }
