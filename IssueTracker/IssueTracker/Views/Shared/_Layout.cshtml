@@ -161,7 +161,7 @@
                     <li>
                         <a asp-area="" asp-controller="InvolvedPerson" asp-action="Index">
                             <i class="fa fa-files-o"></i>
-                            <span>Assigned Issues</span>
+                            <span>Assigned Tasks</span>
                         </a>
                     </li>
                     <li>
@@ -181,7 +181,12 @@
                     </li>
                     <li>
                         <a asp-area="" asp-controller="IssueLog" asp-action="Index">
-                            <i class="fa fa-laptop"></i> <span>Raise Issue</span>
+                            <i class="fa fa-laptop"></i> <span>Raise Task</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="IssueLog" asp-action="IndexForAll">
+                            <i class="fa fa-binoculars"></i> <span>All Tasks</span>
                         </a>
                     </li>
                 </ul>
@@ -213,6 +218,7 @@
     <!-- ./wrapper -->
     <!-- jQuery 3 -->
     <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="~/bower_components/jquery-ui/jquery-ui.min.js"></script>

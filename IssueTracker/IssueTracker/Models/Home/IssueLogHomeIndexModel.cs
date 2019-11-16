@@ -14,6 +14,7 @@ namespace IssueTracker.Models
         public IEnumerable<TodaysIssue> TodaysIssues { get; set; }
         public int UpcomingIssueCount { get; set; }
         public IEnumerable<UpcomingIssue> UpcomingIssues { get; set; }
+        public List<WorkListForChartViewModel> WorkListForChart { get; set; }
     }
 
     public class DeadlineMissedIssue

@@ -191,6 +191,8 @@ namespace IssueTracker.Data.Migrations
 
                     b.Property<string>("ReceiveRemarks");
 
+                    b.Property<DateTime>("SubmitDate");
+
                     b.HasKey("Id");
 
                     b.HasIndex("InvolvedPersonId");

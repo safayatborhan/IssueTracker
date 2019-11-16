@@ -87,12 +87,12 @@ using IssueTracker.Models;
             WriteLiteral("                    <li>\r\n                        <!-- start message -->\r\n                        ");
             EndContext();
             BeginContext(735, 540, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ad3af59b608f46cb8d5bbaaac3dd91a2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2a6bd2d06d4543d89695e512a7e0c5ea", async() => {
                 BeginContext(831, 87, true);
                 WriteLiteral("\r\n                            <div class=\"pull-left\">\r\n                                ");
                 EndContext();
                 BeginContext(918, 80, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "05ed3d371a7f4ca1b8908f46421ad612", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "8bf6f41726744edabebeb566a89b672f", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

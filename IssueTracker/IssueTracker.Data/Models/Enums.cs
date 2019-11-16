@@ -34,6 +34,7 @@ namespace IssueTracker.Data.Models
     public enum EnumIssueType
     {
         Issue_Solve,
-        New_Development
+        New_Development,
+        Outside_Duty
     }
 }

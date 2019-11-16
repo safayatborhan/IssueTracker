@@ -3,6 +3,11 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.WorkListForChart.FirstOrDefault().LstProjectHour.Select(x => x.ProjectName).ToList());
+    var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(Model.WorkListForChart.Select(x => x.LstProjectHour.Select(w => w.Hour)).ToList());
+    var label2 = Newtonsoft.Json.JsonConvert.SerializeObject(Model.WorkListForChart.Select(x => x.DateOfMonth).ToList());
+    ViewData["Title"] = "Stacked Chart";
 }
 <style>
 
@@ -99,7 +104,7 @@
         font-weight: 400;
         line-height: 20px;
         color: #666666;
-        text-align:left;
+        text-align: left;
     }
 
     .card1 .go-corner {
@@ -168,7 +173,7 @@
     .card1 {
         display: block;
         position: relative;
-        width:100%;
+        width: 100%;
         background-color: #f2f8f9;
         border-radius: 4px;
         padding: 32px 24px;
@@ -209,10 +214,11 @@
             transition: all 0.3s ease-out;
             color: #ffffff;
         }
-    .card1:hover ul li {
-        transition: all 0.3s ease-out;
-        color: black;
-    }
+
+        .card1:hover ul li {
+            transition: all 0.3s ease-out;
+            color: black;
+        }
 
 
     .card2 {
@@ -257,16 +263,16 @@
             color: #ffffff;
         }
 
-    .card2:hover ul li {
-        transition: all 0.3s ease-out;
-        color: black;
-    }
+        .card2:hover ul li {
+            transition: all 0.3s ease-out;
+            color: black;
+        }
 
 
     .card3 {
         display: block;
         position: relative;
-        width:100%;
+        width: 100%;
         background-color: #f2f8f9;
         border-radius: 4px;
         padding: 32px 24px;
@@ -325,15 +331,14 @@
     </div>
     <div class="row">
         <div class="col-md-4">
-
-        </div>
-        <div class="col-md-4">
             <img src="~/images/MyTasks.svg" />
         </div>
-        <div class="col-md-4">
-
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="chartStacked" style="width:80%; height:300px"></canvas>
+            </div>
         </div>
-        
+
     </div>
     <br />
     <div class="row" style="padding-right:115px;margin-left:-40px;">
@@ -409,8 +414,83 @@
                     </div>
                 </div>
             </a>
-        </div>   
+        </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $(function () {
 
+        var chartColors = [
+            'rgba(44, 202, 250, 0.5)',
+            'rgba(255, 224, 27, 0.5)',
+            'rgba(255, 115, 129, 0.5)',
+            'rgba(255, 199, 219, 0.5)',
+            'rgba(44, 202, 250, 0.5)',
+            'rgba(255, 224, 27, 0.5)',
+            'rgba(255, 115, 129, 0.5)',
+            'rgba(255, 199, 219, 0.5)'
+        ];
+
+            var chartName = "chartStacked";
+            var ctx = document.getElementById(chartName).getContext('2d');
+            var XLabels = @Html.Raw(XLabels);
+            var YValues = @Html.Raw( YValues );
+            var label = @Html.Raw( label2 );
+            var aux = 0;
+
+            var barChartData = {
+                labels:  @Html.Raw(label2),
+                datasets: []
+            }
+
+            XLabels.forEach(function (a, i) {
+                var data = [];
+                YValues.forEach(function (a, i) {
+                    data.push(a[aux]);
+                });
+
+            barChartData.datasets.push({
+                label: XLabels[aux],
+                //backgroundColor: random_rgba(),
+                backgroundColor: chartColors[aux],
+                data: data
+                });
+                aux++;
+            });
+            var options = {
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            beginAtZero: true
+                        },
+                        stacked: true,
+                        gridLines: {
+                            display: true,
+                            color: "rgba(255,99,164,0.2)"
+                        }
+                    }],
+                    xAxes: [{
+                        stacked: true,
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                }
+            };
+            function random_rgba() {
+                var o = Math.round, r = Math.random, s = 255;
+                return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + r().toFixed(1) + ')';
+            }
+            var myChart = new Chart(ctx, {
+                options: options,
+                data: barChartData,
+                type: 'bar'
+
+            });
+        });
+</script>
 

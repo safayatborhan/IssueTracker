@@ -33,7 +33,7 @@ namespace IssueTracker.Models
         [DataType(DataType.Date)]
         [Display(Name = "Expected Date")]
         public DateTime? ExpectedDate { get; set; }
-        [Display(Name = "Issue Type")]
+        [Display(Name = "Task Type")]
         public string IssueType { get; set; }
 
         public string Title { get; set; }

@@ -95,6 +95,7 @@ namespace IssueTracker.Controllers
             {
                 issuelogInvolvedPerson.IsComplete = true;
                 issuelogInvolvedPerson.HoursToComplete = model.HoursToComplete;
+                issuelogInvolvedPerson.SubmitDate = DateTime.Now;
 
                 notification = new Notification
                 {

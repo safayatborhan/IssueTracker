@@ -27,11 +27,20 @@ namespace IssueTracker.Controllers
             _notificationService = notificationService;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
-            var issueLogs = _issueLogService.GetAll().Where(x => x.IsComplete == false).OrderByDescending(x => x.AssignDate).ToList();
-            var model = BuildIssueLogIndex(issueLogs);
+            var userId = _userManager.GetUserId(User);
+            var issueLogs = _issueLogService.GetAll().Where(x => x.IsComplete == false && x.EntryBy.Id == userId).OrderByDescending(x => x.AssignDate).ToList();
+            var model = BuildIssueLogIndex(issueLogs, false);
             return View(model);
+        }
+
+        public IActionResult IndexForAll()
+        {
+            var issueLogs = _issueLogService.GetAll().Where(x => x.IsComplete == false).OrderByDescending(x => x.AssignDate).ToList();
+            var model = BuildIssueLogIndex(issueLogs, true);
+            return View("Index",model);
         }
 
         [Authorize]
@@ -309,7 +318,7 @@ namespace IssueTracker.Controllers
             return model;
         }
 
-        private IEnumerable<IssueLogListingModel> BuildIssueLogIndex(IEnumerable<IssueLog> issueLogs)
+        private IEnumerable<IssueLogListingModel> BuildIssueLogIndex(IEnumerable<IssueLog> issueLogs, bool isForAll)
         {
             var model = issueLogs.Select(x => new IssueLogListingModel
             {
@@ -321,7 +330,8 @@ namespace IssueTracker.Controllers
                 IssueInvolvedPersonsName = String.Join(", ",x.IssueLogInvolvedPersons.Select(y => y.InvolvedPerson.UserName)),
                 EntryById = x.EntryBy.Id,
                 CurrentLoginUserId = _userManager.GetUserId(User),
-                IsAllInvolvedPersonCompleted = x.IssueLogInvolvedPersons.Where(y => y.IsComplete).ToList().Count == x.IssueLogInvolvedPersons.Count()
+                IsAllInvolvedPersonCompleted = x.IssueLogInvolvedPersons.Where(y => y.IsComplete).ToList().Count == x.IssueLogInvolvedPersons.Count(),
+                IsForAll = isForAll
             });
             return model;
         }

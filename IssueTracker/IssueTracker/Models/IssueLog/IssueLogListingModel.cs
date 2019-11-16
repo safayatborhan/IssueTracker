@@ -36,7 +36,7 @@ namespace IssueTracker.Models
         [Display(Name = "Expected Hour")]
         public double TaskHour { get; set; }
         [Required]
-        [Display(Name = "Issue Type")]
+        [Display(Name = "Task Type")]
         public EnumIssueType? IssueType { get; set; }
         [Display(Name = "Involved Person")]
         public int IssueLogInvolvedPersonId { get; set; }
@@ -58,5 +58,7 @@ namespace IssueTracker.Models
 
         public string CurrentLoginUserId { get; set; }
         public bool IsAllInvolvedPersonCompleted { get; set; }
+
+        public bool IsForAll { get; set; }
     }
 }
