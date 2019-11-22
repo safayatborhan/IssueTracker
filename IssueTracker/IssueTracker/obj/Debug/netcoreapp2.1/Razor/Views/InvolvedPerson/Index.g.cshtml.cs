@@ -78,12 +78,12 @@ using IssueTracker.Models;
             WriteLiteral("    <h2 class=\"text-center\">Assigned Tasks</h2>\r\n        <div>\r\n            ");
             EndContext();
             BeginContext(264, 248, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "99265ebd57ca45a1b223cc827a25298b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "13a64ccdda8f447b9a76b0164e5e638c", async() => {
                 BeginContext(336, 18, true);
                 WriteLiteral("\r\n                ");
                 EndContext();
                 BeginContext(354, 137, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "3144f7a97d1d4fdba3dc719d36ed9499", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "0cfed33276d34757b6eac944cd5fee5c", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper>();

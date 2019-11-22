@@ -8,7 +8,11 @@
 <h2 class="text-center">Raised Tasks</h2>
 
 <p>
-    @if (!Model.First().IsForAll)
+    @if (Model.AsEnumerable().Count() == 0)
+    {
+        <a style="margin-left: -20px;" asp-action="Create" class="btn btn-primary"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Create New</a>
+    }
+    else if (!Model.First().IsForAll)
     {
         <a style="margin-left: -20px;" asp-action="Create" class="btn btn-primary"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Create New</a>
     }

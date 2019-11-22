@@ -26,12 +26,12 @@ namespace IssueTracker.Controllers
         }
 
         [Authorize]
-        public IActionResult Index()
+        public IActionResult IndexForAll()
         {
             var userId = _userManager.GetUserId(User);
             var involvedPersons = _involvedPersonService.GetAllLogs(userId).Where(x => x.IsComplete == false).OrderBy(x => x.IssueLog.IssueDate);
             var model = BuildInvolvedPersonIndex(involvedPersons);
-            return View(model);
+            return View("Index", model);
         }
 
         [Authorize]
@@ -66,7 +66,7 @@ namespace IssueTracker.Controllers
             var notification = _notificationService.GetById(id);
             notification.IsRead = true;
             _notificationService.Update(notification);
-            return RedirectToAction("Index", "InvolvedPerson");
+            return RedirectToAction("IndexForAll", "InvolvedPerson");
         }
 
         [HttpPost]
