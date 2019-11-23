@@ -202,6 +202,29 @@ namespace IssueTracker.Data.Migrations
                     b.ToTable("IssueLogInvolvedPerson");
                 });
 
+            modelBuilder.Entity("IssueTracker.Data.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Text")
+                        .IsRequired();
+
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("UserName")
+                        .IsRequired();
+
+                    b.Property<DateTime>("When");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Message");
+                });
+
             modelBuilder.Entity("IssueTracker.Data.Models.Notification", b =>
                 {
                     b.Property<int>("Id")
@@ -418,6 +441,13 @@ namespace IssueTracker.Data.Migrations
                     b.HasOne("IssueTracker.Data.Models.IssueLog", "IssueLog")
                         .WithMany("IssueLogInvolvedPersons")
                         .HasForeignKey("IssueLogId");
+                });
+
+            modelBuilder.Entity("IssueTracker.Data.Models.Message", b =>
+                {
+                    b.HasOne("IssueTracker.Data.Models.ApplicationUser", "Sender")
+                        .WithMany("Messages")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("IssueTracker.Data.Models.Project", b =>

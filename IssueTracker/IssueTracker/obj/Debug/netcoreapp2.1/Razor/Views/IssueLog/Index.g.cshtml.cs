@@ -83,7 +83,7 @@ using IssueTracker.Models;
             WriteLiteral("        ");
             EndContext();
             BeginContext(264, 144, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d657e2cb76c94fab83cc66cd6cd22eee", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a53ca8fb537c4f618395022fb2a1015d", async() => {
                 BeginContext(339, 65, true);
                 WriteLiteral("<i class=\"fa fa-plus-square-o\" aria-hidden=\"true\"></i> Create New");
                 EndContext();
@@ -117,7 +117,7 @@ using IssueTracker.Models;
             WriteLiteral("        ");
             EndContext();
             BeginContext(471, 144, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "90a5f2cd320b49bf8bbeb57986ae21ac", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b06c20770424d64929e3170c52eea92", async() => {
                 BeginContext(546, 65, true);
                 WriteLiteral("<i class=\"fa fa-plus-square-o\" aria-hidden=\"true\"></i> Create New");
                 EndContext();
@@ -269,7 +269,7 @@ using IssueTracker.Models;
             WriteLiteral("                        ");
             EndContext();
             BeginContext(2113, 171, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d6ed6b9779424332844d454cbb01bcc4", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "aadff2685332450daa43925b5acb5b3d", async() => {
                 BeginContext(2230, 50, true);
                 WriteLiteral("<i class=\"fa fa-power-off\" aria-hidden=\"true\"></i>");
                 EndContext();
@@ -314,7 +314,7 @@ using IssueTracker.Models;
             WriteLiteral("                    ");
             EndContext();
             BeginContext(2329, 136, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c063d4e400c84ad1ae9356694f7da41c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "792d25bd4d73416f9fe3bf75bac3c06d", async() => {
                 BeginContext(2405, 56, true);
                 WriteLiteral("<i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i>");
                 EndContext();
@@ -350,7 +350,7 @@ using IssueTracker.Models;
             WriteLiteral("\r\n                    ");
             EndContext();
             BeginContext(2487, 203, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "35e6ddbd5c894e7580c523e65f009bc7", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "36c2b44b30204bc6bcfde878020cc049", async() => {
                 BeginContext(2638, 48, true);
                 WriteLiteral("<i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i>");
                 EndContext();

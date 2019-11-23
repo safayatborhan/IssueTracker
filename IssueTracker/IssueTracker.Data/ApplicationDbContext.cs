@@ -14,6 +14,12 @@ namespace IssueTracker.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<Message>().HasOne<ApplicationUser>(a => a.Sender).WithMany(b => b.Messages).HasForeignKey(b => b.UserId);
+        }
+
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }        
         public DbSet<Designation> Designation { get; set; }
         public DbSet<Company> Company { get; set; }
@@ -21,5 +27,6 @@ namespace IssueTracker.Data
         public DbSet<IssueLogInvolvedPerson> IssueLogInvolvedPerson { get; set; }
         public DbSet<Project> Project { get; set; }
         public DbSet<Notification> Notification { get; set; }
+        public DbSet<Message> Message { get; set; }
     }
 }
