@@ -57,10 +57,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IssueInvolvedPersonsName)
             </td>          
-            <td>
+            <td width="100px">
                 @if (item.CurrentLoginUserId == item.EntryById)
                 {
-                    if (item.IsAllInvolvedPersonCompleted)
+                    @if (item.IsAllInvolvedPersonCompleted)
                     {
                         <a class="btn btn-xs btn-primary" style="background-color:greenyellow" asp-action="Complete" asp-route-id="@item.Id"><i class="fa fa-power-off" aria-hidden="true"></i></a>
                     }

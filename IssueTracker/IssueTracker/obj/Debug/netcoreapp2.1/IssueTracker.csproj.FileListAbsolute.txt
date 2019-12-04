@@ -69,4 +69,4 @@ D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Ar
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Areas\Identity\Pages\Account\Manage\_ViewImports.g.cshtml.cs
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\Notification\Default.g.cshtml.cs
 D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\WorkDetail\EmployeeWorkDetail.g.cshtml.cs
-D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\Chat\Index.g.cshtml.cs
+D:\WORKS\IssueTracker\IssueTracker\IssueTracker\obj\Debug\netcoreapp2.1\Razor\Views\Chatter\Index.g.cshtml.cs

@@ -17,5 +17,7 @@ namespace IssueTracker.Models
         public string TaskHour { get; set; }
         public string IssueType { get; set; }
         public string IssueLogInvolvedPersonIds { get; set; }
+        public string IsAllCompletedExceptOwn { get; set; }
+        public double WorkHour { get; set; }
     }
 }

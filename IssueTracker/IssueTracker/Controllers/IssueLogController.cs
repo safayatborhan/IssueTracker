@@ -19,14 +19,16 @@ namespace IssueTracker.Controllers
         private readonly IIssueLog _issueLogService;
         private readonly IProject _projectService;
         private readonly INotification _notificationService;
+        private readonly IInvolvedPerson _involvedPersonService;
         private static UserManager<ApplicationUser> _userManager;
 
-        public IssueLogController(IIssueLog issueLogService,IProject projectService, UserManager<ApplicationUser> userManager, INotification notificationService)
+        public IssueLogController(IIssueLog issueLogService,IProject projectService, UserManager<ApplicationUser> userManager, INotification notificationService, IInvolvedPerson involvedPersonService)
         {
             _issueLogService = issueLogService;
             _projectService = projectService;
             _userManager = userManager;
             _notificationService = notificationService;
+            _involvedPersonService = involvedPersonService;
         }
 
         [Authorize]
@@ -171,6 +173,30 @@ namespace IssueTracker.Controllers
                 
                 var issueLog = BuildIssueLogForCreate(issueLogListingModel, user, involvedPersons.Distinct());
                 issueLog.Id = issueLogListingModel.Id;
+                var il = _issueLogService.GetById(issueLog.Id);
+                bool isAllComplted = false;
+                bool.TryParse(issueLogListingModel.IsAllCompletedExceptOwn, out isAllComplted);
+                foreach (var item in issueLog.IssueLogInvolvedPersons)
+                {
+                    if (item.InvolvedPerson.Id == _userManager.GetUserId(User))
+                    {
+                        if (isAllComplted)
+                        {
+                            item.IsComplete = true;
+                            item.HoursToComplete = issueLogListingModel.WorkHour;
+                            item.SubmitDate = DateTime.Now;
+                        }
+                    }
+                    else
+                    {
+                        var searchItemFromInvolvedPerson = il.IssueLogInvolvedPersons.Where(x => x.InvolvedPerson.Id == item.InvolvedPerson.Id).FirstOrDefault();
+                        item.HoursToComplete = searchItemFromInvolvedPerson != null ? searchItemFromInvolvedPerson.HoursToComplete : 0;
+                        item.ExpectedHour = searchItemFromInvolvedPerson != null? searchItemFromInvolvedPerson.ExpectedHour : 0;
+                        item.ReceiveDate = searchItemFromInvolvedPerson != null? searchItemFromInvolvedPerson.ReceiveDate : DateTime.MinValue;
+                        item.IsComplete = searchItemFromInvolvedPerson != null? searchItemFromInvolvedPerson.IsComplete : false;
+                        item.SubmitDate = searchItemFromInvolvedPerson != null ? searchItemFromInvolvedPerson.SubmitDate : DateTime.MinValue;
+                    }                    
+                }
                 _issueLogService.Edit(issueLog);
 
                 return Json(new
@@ -238,7 +264,8 @@ namespace IssueTracker.Controllers
                 Priority = issueLog.Priority,
                 TaskHour = issueLog.TaskHour,
                 IssueType = issueLog.IssueType,
-                ApplicationUserListingModels = BuildApplicationUserList()
+                ApplicationUserListingModels = BuildApplicationUserList(),
+                IsAllCompletedExceptOwn = issueLog.IssueLogInvolvedPersons.Where(y => y.InvolvedPerson.Id != _userManager.GetUserId(User) && y.IsComplete).ToList().Count == (issueLog.IssueLogInvolvedPersons.Count() - 1)
             };
             return model;
         }        
@@ -270,6 +297,8 @@ namespace IssueTracker.Controllers
 
         private IssueLog BuildIssueLogForCreate(IssueLogListingModelForAjax model, ApplicationUser applicationUser, IEnumerable<ApplicationUser> involvedPersons)
         {
+            bool isAllComplted = false;
+            bool.TryParse(model.IsAllCompletedExceptOwn, out isAllComplted);
             var issueLog = new IssueLog
             {
                 Project = BuildProject(int.Parse(model.ProjectId)),
@@ -279,23 +308,24 @@ namespace IssueTracker.Controllers
                 Note = model.Note,
                 EntryBy = applicationUser,
                 AssignDate = DateTime.Now,
-                IssueLogInvolvedPersons = BuildIssueLogInvolvedPerson(involvedPersons),
+                IssueLogInvolvedPersons = BuildIssueLogInvolvedPerson(involvedPersons, isAllComplted),
                 Priority = (EnumIssuePriority)int.Parse(model.Priority),
                 TaskHour = double.Parse(model.TaskHour),
-                IssueType = (EnumIssueType)int.Parse(model.IssueType)
+                IssueType = (EnumIssueType)int.Parse(model.IssueType)                
             };
 
             return issueLog;
         }
 
 
-        private IEnumerable<IssueLogInvolvedPerson> BuildIssueLogInvolvedPerson(IEnumerable<ApplicationUser> involvedPersonsModel)
+        private IEnumerable<IssueLogInvolvedPerson> BuildIssueLogInvolvedPerson(IEnumerable<ApplicationUser> involvedPersonsModel, bool isAllCompleted)
         {
             var involvedPersons = new List<IssueLogInvolvedPerson>();
             foreach (var ip in involvedPersonsModel)
             {
                 var involvedPerson = new IssueLogInvolvedPerson();
-                involvedPerson.InvolvedPerson = ip;
+                involvedPerson.InvolvedPerson = new ApplicationUser();
+                involvedPerson.InvolvedPerson.Id = ip.Id;
                 involvedPersons.Add(involvedPerson);
             }            
             return involvedPersons;
@@ -345,7 +375,8 @@ namespace IssueTracker.Controllers
                 CompanyName = x.Project.Company.Name,
                 IssueDate = x.IssueDate != DateTime.MinValue ? (DateTime?)x.IssueDate : null,
                 Header = x.Header,
-                IssueInvolvedPersonsName = String.Join(", ",x.IssueLogInvolvedPersons.Select(y => y.InvolvedPerson.UserName)),
+                IsAllCompletedExceptOwn = x.IssueLogInvolvedPersons.Where(y => y.InvolvedPerson.Id != _userManager.GetUserId(User) && y.IsComplete).ToList().Count == (x.IssueLogInvolvedPersons.Count() - 1),
+                IssueInvolvedPersonsName = String.Join(", ",x.IssueLogInvolvedPersons.Select(y => y.InvolvedPerson.UserName)) + ((x.IssueLogInvolvedPersons.Where(y => y.InvolvedPerson.Id != _userManager.GetUserId(User) && y.IsComplete).ToList().Count == (x.IssueLogInvolvedPersons.Count() - 1)) ? " (Please close this issue ASAP.)" : ""),
                 EntryById = x.EntryBy.Id,
                 CurrentLoginUserId = _userManager.GetUserId(User),
                 IsAllInvolvedPersonCompleted = x.IssueLogInvolvedPersons.Where(y => y.IsComplete).ToList().Count == x.IssueLogInvolvedPersons.Count(),

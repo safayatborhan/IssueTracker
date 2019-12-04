@@ -58,7 +58,11 @@ namespace IssueTracker.Models
 
         public string CurrentLoginUserId { get; set; }
         public bool IsAllInvolvedPersonCompleted { get; set; }
+        public bool IsAllCompletedExceptOwn { get; set; }
 
         public bool IsForAll { get; set; }
+
+        [Display(Name = "Work Hour")]
+        public double WorkHour { get; set; }
     }
 }

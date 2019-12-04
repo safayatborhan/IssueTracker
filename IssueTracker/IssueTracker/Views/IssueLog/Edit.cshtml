@@ -17,6 +17,7 @@
     <input id="txtId" type="hidden" asp-for="Id" />
     <input id="txtCompany" type="hidden" asp-for="CompanyId" />
     <input id="txtProject" type="hidden" asp-for="ProjectId" />
+    <input id="txtIsAllCompletedExceptOwn" type="hidden" asp-for="IsAllCompletedExceptOwn" />
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -129,6 +130,18 @@
             </div>
         </div>
     </div>
+    @if (Model.IsAllCompletedExceptOwn)
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="WorkHour" class="control-label"></label>
+                    <input type="number" asp-for="WorkHour" id="txtWorkHour" name="txtWorkHour" class="form-control" />
+                    <span asp-validation-for="WorkHour" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    }
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -205,6 +218,7 @@
 
                 issueLogListingModel.Id = $("#txtId").val()
                 issueLogListingModel.ProjectId = $("#txtProject").val();
+                issueLogListingModel.IsAllCompletedExceptOwn = $("#txtIsAllCompletedExceptOwn").val();
                 issueLogListingModel.IssueDate = $("#dtpIssueDate").val();
                 issueLogListingModel.Header = $("#txtHeader").val();
                 issueLogListingModel.Body = $("#txtBody").val();
@@ -212,6 +226,8 @@
                 issueLogListingModel.Priority = $("#comboPriority").val();
                 issueLogListingModel.TaskHour = $("#txtTaskHour").val();
                 issueLogListingModel.IssueType = $("#comboIssueType").val();
+
+                issueLogListingModel.WorkHour = $("#txtWorkHour").val();              
 
                 $("#tableIssueInvolvedPerson tbody tr").each(function () {
                     var row = $(this);
@@ -232,7 +248,9 @@
                         'Priority': issueLogListingModel.Priority,
                         'TaskHour': issueLogListingModel.TaskHour,
                         'IssueType': issueLogListingModel.IssueType,
-                        'IssueLogInvolvedPersonIds': issueLogListingModel.IssueLogInvolvedPersonIds.join()
+                        'IssueLogInvolvedPersonIds': issueLogListingModel.IssueLogInvolvedPersonIds.join(),
+                        'IsAllCompletedExceptOwn': issueLogListingModel.IsAllCompletedExceptOwn,
+                        'WorkHour': issueLogListingModel.WorkHour
                     }),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",

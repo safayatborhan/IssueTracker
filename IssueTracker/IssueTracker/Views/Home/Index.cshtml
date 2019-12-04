@@ -4,7 +4,8 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.WorkListForChart.FirstOrDefault().LstProjectHour.Select(x => x.ProjectName).ToList());
+    //var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.WorkListForChart.FirstOrDefault().LstProjectHour.Select(x => x.ProjectName).ToList());
+    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.WorkListForChart.Select(y => y.LstProjectHour.Select(x => x.ProjectName)).ToList());
     var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(Model.WorkListForChart.Select(x => x.LstProjectHour.Select(w => w.Hour)).ToList());
     var label2 = Newtonsoft.Json.JsonConvert.SerializeObject(Model.WorkListForChart.Select(x => x.DateOfMonth).ToList());
     ViewData["Title"] = "Stacked Chart";

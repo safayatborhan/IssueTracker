@@ -76,11 +76,10 @@ namespace IssueTracker
 
             app.UseAuthentication();
 
-            app.UseSignalR(route =>
-            {
-                route.MapHub<ChatHub>("/Chatter");
-                //route.MapHub<ChatHub>("/Chat");
-            });
+            //app.UseSignalR(route =>
+            //{
+            //    route.MapHub<ChatHub>("/Chatter");
+            //});
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

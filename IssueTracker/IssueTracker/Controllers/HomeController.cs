@@ -38,12 +38,12 @@ namespace IssueTracker.Controllers
             var deadlineMissedIssues = involvedPersons.Where(x => x.IssueLog.IssueDate.Date < DateTime.Now.Date).ToList();
             var todaysIssues = involvedPersons.Where(x => x.IssueLog.IssueDate.Date == DateTime.Now.Date).ToList();
             var upcomingIssues = involvedPersons.Where(x => x.IssueLog.IssueDate.Date > DateTime.Now.Date).ToList();
-            var previousIssues = involvedPersonsCompleted.Where(x => (x.SubmitDate.Date >= new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).Date && x.SubmitDate.Date < DateTime.Now.Date)).ToList();
+            var previousIssues = involvedPersonsCompleted.Where(x => (x.SubmitDate.Date >= new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).Date && x.SubmitDate.Date <= new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)).Date)).ToList();
 
             //Chart start
             var lstModel = new List<WorkListForChartViewModel>();
             //sales of product sales by quarter
-            for(DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).Date; date < DateTime.Now.Date; date = date.AddDays(1))
+            for(DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).Date; date <= DateTime.Now.Date; date = date.AddDays(1))
             {
                 var previousIssuesByDate = previousIssues.Where(x => x.SubmitDate.Date == date).ToList();
                 lstModel.Add(new WorkListForChartViewModel
