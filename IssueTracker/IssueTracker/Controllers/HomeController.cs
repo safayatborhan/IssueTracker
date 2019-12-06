@@ -16,11 +16,13 @@ namespace IssueTracker.Controllers
     {
         private static UserManager<ApplicationUser> _userManager;
         private readonly IInvolvedPerson _involvedPersonService;
+        private readonly IProject _projectService;
 
-        public HomeController(IInvolvedPerson involvedPersonService, UserManager<ApplicationUser> userManager)
+        public HomeController(IInvolvedPerson involvedPersonService, UserManager<ApplicationUser> userManager, IProject projectService)
         {
             _involvedPersonService = involvedPersonService;
             _userManager = userManager;
+            _projectService = projectService;
         }
 
         [Authorize]
@@ -33,6 +35,30 @@ namespace IssueTracker.Controllers
             return View(model);
         }
 
+        private List<ProjectWiseWorkList> ProjectHourList(IEnumerable<Project> projects, IEnumerable<IssueLogInvolvedPerson> involvedPersonsCompleted)
+        {
+            List<ProjectWiseWorkList> lst = new List<ProjectWiseWorkList>();
+            foreach (var project in projects)
+            {
+                ProjectWiseWorkList projectWiseWorkList = new ProjectWiseWorkList();
+                if (involvedPersonsCompleted.Any(x => x.IssueLog.Project.Id == project.Id))
+                {
+                    var ip = involvedPersonsCompleted.Where(x => x.IssueLog.Project.Id == project.Id).FirstOrDefault();
+                    projectWiseWorkList.ProjectName = ip.IssueLog.Project.Name + "(" + ip.IssueLog.Project.Company.Name + ")";
+                    projectWiseWorkList.Hour = ip.HoursToComplete;
+                    lst.Add(projectWiseWorkList);
+                }
+                else
+                {
+                    projectWiseWorkList.ProjectName = project.Name + "(" + project.Company.Name + ")";
+                    projectWiseWorkList.Hour = 0;
+                    lst.Add(projectWiseWorkList);
+                }
+            }
+
+            return lst;
+        }
+
         private IssueLogHomeIndexModel BuildHomeIssueLogIndex(IOrderedEnumerable<IssueLogInvolvedPerson> involvedPersons, IEnumerable<IssueLogInvolvedPerson> involvedPersonsCompleted)
         {
             var deadlineMissedIssues = involvedPersons.Where(x => x.IssueLog.IssueDate.Date < DateTime.Now.Date).ToList();
@@ -42,37 +68,27 @@ namespace IssueTracker.Controllers
 
             //Chart start
             var lstModel = new List<WorkListForChartViewModel>();
+            var projects = _projectService.GetAll();
             //sales of product sales by quarter
             for(DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).Date; date <= DateTime.Now.Date; date = date.AddDays(1))
             {
                 var previousIssuesByDate = previousIssues.Where(x => x.SubmitDate.Date == date).ToList();
-                lstModel.Add(new WorkListForChartViewModel
+                //if(previousIssuesByDate != null && previousIssuesByDate.Count > 0)
                 {
-                    DateOfMonth = date.ToString("dd MMM"),
-                    LstProjectHour = previousIssuesByDate.Select(x => new ProjectWiseWorkList
+                    lstModel.Add(new WorkListForChartViewModel
                     {
-                        ProjectName = x.IssueLog.Project.Name + "(" + x.IssueLog.Project.Company.Name + ")",
-                        Hour = x.HoursToComplete
-                    })
-                    //LstProjectHour = new List<ProjectWiseWorkList>()
-                    //{
-                    //    new ProjectWiseWorkList()
-                    //    {
-                    //        ProjectName="Payroll",
-                    //        Hour = 2
-                    //    },
-                    //    new ProjectWiseWorkList()
-                    //    {
-                    //        ProjectName="TOM",
-                    //        Hour = 3
-                    //    },
-                    //    new ProjectWiseWorkList()
-                    //    {
-                    //        ProjectName="Training",
-                    //        Hour = 4
-                    //    }
-                    //}
-                });
+                        DateOfMonth = date.ToString("dd MMM"),
+                        //LstProjectHour = previousIssuesByDate.Select(x => new ProjectWiseWorkList
+                        //{
+                        //    ProjectName = x.IssueLog.Project.Name + "(" + x.IssueLog.Project.Company.Name + ")",
+                        //    Hour = x.HoursToComplete
+                        //}),
+                        Projects = projects.Select(x => x.Name + "(" + x.Company.Name + ")"),
+
+                        LstProjectHour = ProjectHourList(projects, previousIssuesByDate)
+                    });
+                }
+                
             }
             
             //Chart end

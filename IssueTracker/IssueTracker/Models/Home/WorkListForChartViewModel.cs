@@ -9,6 +9,7 @@ namespace IssueTracker.Models
     {
         public string DateOfMonth { get; set; }
         public IEnumerable<ProjectWiseWorkList> LstProjectHour { get; set; }
+        public IEnumerable<string> Projects { get; set; }
     }
 
     public class ProjectWiseWorkList

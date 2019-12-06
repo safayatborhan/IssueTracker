@@ -175,7 +175,7 @@ body {
 ");
             EndContext();
             BeginContext(1894, 74, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "82a8f004d7204f6393bb70ccf6d42cec", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "80f72a24d5c14d25abb3f177ec1406d6", async() => {
                 BeginContext(1900, 61, true);
                 WriteLiteral("\r\n    <meta name=\"viewport\" content=\"width=device-width\" />\r\n");
                 EndContext();
@@ -195,7 +195,7 @@ body {
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(1970, 2695, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e435dd8e396c452ea5097f902f127027", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3819955963054d1682bfd55c276dd3a5", async() => {
                 BeginContext(1976, 228, true);
                 WriteLiteral("\r\n    <div class=\"jumbotron bg-light-blue\">\r\n        <h2 class=\"text-center text-primary\">\r\n            <i class=\"fa-facebook\">Chat</i>\r\n        </h2>\r\n\r\n        <div class=\"row\">\r\n            <div class=\"col-md-12\" id=\"chat\">\r\n");
                 EndContext();
@@ -334,12 +334,12 @@ WriteAttributeValue("", 3613, timePosition, 3613, 13, false);
                 WriteLiteral("            </div>\r\n            <div class=\"col-md-12\">\r\n                ");
                 EndContext();
                 BeginContext(3884, 724, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2ef1227ff3b74704934736bf92b9581d", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1bdc1d6eb3c545eead5d78d2c896eb5e", async() => {
                     BeginContext(4073, 22, true);
                     WriteLiteral("\r\n                    ");
                     EndContext();
                     BeginContext(4095, 66, false);
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("div", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e7e310e1be6c4fb28783030a9a61d86f", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("div", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bb20455332114f2f90d956445ef3d6c2", async() => {
                     }
                     );
                     __Microsoft_AspNetCore_Mvc_TagHelpers_ValidationSummaryTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.ValidationSummaryTagHelper>();

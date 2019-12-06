@@ -4,8 +4,8 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    //var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.WorkListForChart.FirstOrDefault().LstProjectHour.Select(x => x.ProjectName).ToList());
-    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.WorkListForChart.Select(y => y.LstProjectHour.Select(x => x.ProjectName)).ToList());
+    //var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.WorkListForChart.Select(y => y.LstProjectHour.Select(x => x.ProjectName)).ToList());
+    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.WorkListForChart.FirstOrDefault().Projects.ToList());
     var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(Model.WorkListForChart.Select(x => x.LstProjectHour.Select(w => w.Hour)).ToList());
     var label2 = Newtonsoft.Json.JsonConvert.SerializeObject(Model.WorkListForChart.Select(x => x.DateOfMonth).ToList());
     ViewData["Title"] = "Stacked Chart";
@@ -459,11 +459,14 @@
                     data.push(a[aux]);
                 });
 
-            barChartData.datasets.push({
-                label: XLabels[aux],
-                //backgroundColor: random_rgba(),
-                backgroundColor: chartColors[aux],
-                data: data
+                if (Array.isArray(XLabels[aux]) && XLabels[aux].length) {
+                    
+                }
+                barChartData.datasets.push({
+                    label: XLabels[aux],
+                    //backgroundColor: random_rgba(),
+                    backgroundColor: chartColors[aux],
+                    data: data
                 });
                 aux++;
             });
@@ -492,13 +495,15 @@
             function random_rgba() {
                 var o = Math.round, r = Math.random, s = 255;
                 return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + r().toFixed(1) + ')';
-            }
+        }
+        Chart.defaults.global.legend.display = false;
             var myChart = new Chart(ctx, {
                 options: options,
                 data: barChartData,
                 type: 'bar'
 
-            });
+        });
+        
         });
 </script>
 
