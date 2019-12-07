@@ -109,5 +109,17 @@ namespace IssueTracker.Service.Services
             var company = _context.Company.Where(x => x.Id == id).FirstOrDefault();
             return company;
         }
+
+        public ProjectContactPerson GetContactPersonById(int id)
+        {
+            var contactPersons = _context.ProjectContactPerson.Where(x => x.Id == id).FirstOrDefault();
+            return contactPersons;
+        }
+
+        public IEnumerable<ProjectContactPerson> GetAllContactPerson()
+        {
+            var contactPersons = _context.ProjectContactPerson.ToList();
+            return contactPersons;
+        }
     }
 }

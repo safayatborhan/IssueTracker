@@ -50,8 +50,9 @@ namespace IssueTracker
             services.AddScoped<IInvolvedPerson, InvolvedPersonService>();
             services.AddScoped<INotification, NotificationService>();
             services.AddScoped<IChat, ChatService>();
+            services.AddScoped<IProjectWiseStatus, ProjectWiseStatusService>();
 
-            
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSignalR();
         }

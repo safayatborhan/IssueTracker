@@ -1,0 +1,44 @@
+﻿@model IssueTracker.Models.ProjectWiseStatusIndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Project Wise Status</h2>
+
+<p>
+    <a style="margin-left: -20px;" asp-controller="ProjectWiseStatus" asp-action="Create" class="btn btn-primary"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Create New</a>
+</p>
+<table id="dtDesignation" class="ui celled table" style="margin-left: 5px;">
+    <thead>
+        <tr>
+            <th>Company</th>
+            <th>Project</th>
+            <th>Last Status Date</th>
+            <th>Status By</th>
+            <th>Contact Person</th>
+            <th>Contract End Date</th>
+            <th>Remarks</th>
+            <th>Relation With Client</th>
+            <th>Last Visit Date</th>
+            <th>Project Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ProjectWiseStatusList) {
+        <tr>
+            <td>@item.CompanyName</td>
+            <td>@item.ProjectName</td>
+            <td>@item.LastStatusDate</td>
+            <td>@item.StatusBy</td>
+            <td>@item.ProjectContactPersonName</td>
+            <td>@item.ContractEndDate</td>
+            <td>@item.Remarks</td>
+            <td>@item.RelationWithClient</td>
+            <td>@item.LastVisitDate</td>
+            <td>@item.ProjectType.ToString()</td>
+        </tr>
+}
+    </tbody>
+</table>

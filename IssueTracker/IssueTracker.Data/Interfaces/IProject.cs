@@ -16,5 +16,8 @@ namespace IssueTracker.Data
 
         Company GetCompanyById(int id);
         IEnumerable<Company> GetAllCompanies();
+
+        ProjectContactPerson GetContactPersonById(int id);
+        IEnumerable<ProjectContactPerson> GetAllContactPerson();
     }
 }

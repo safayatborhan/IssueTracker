@@ -69,7 +69,7 @@ using IssueTracker.Models;
             WriteLiteral("\r\n<h2 class=\"text-center\">Designations</h2>\r\n\r\n<p>\r\n    ");
             EndContext();
             BeginContext(196, 173, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a6f020a82dd94d2eb49711b82e148448", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9a424070a1ed497487b06d81fb589fab", async() => {
                 BeginContext(300, 65, true);
                 WriteLiteral("<i class=\"fa fa-plus-square-o\" aria-hidden=\"true\"></i> Create New");
                 EndContext();
@@ -123,7 +123,7 @@ using IssueTracker.Models;
             WriteLiteral("</td>\r\n            <td>\r\n                ");
             EndContext();
             BeginContext(763, 136, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "685780b7f8c24621902b8470896f2706", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "403e483de0f54c2aba50a82a87a0a1e0", async() => {
                 BeginContext(839, 56, true);
                 WriteLiteral("<i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i>");
                 EndContext();

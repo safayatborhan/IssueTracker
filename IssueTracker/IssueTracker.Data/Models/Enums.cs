@@ -37,4 +37,11 @@ namespace IssueTracker.Data.Models
         New_Development,
         Outside_Duty
     }
+
+    public enum EnumRelationWithClient
+    {
+        Good,
+        Excellent,
+        Needs_to_improve
+    }
 }

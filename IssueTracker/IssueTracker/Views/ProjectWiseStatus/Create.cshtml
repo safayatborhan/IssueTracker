@@ -1,0 +1,99 @@
+﻿@using IssueTracker.Data.Models
+@model IssueTracker.Models.ProjectWiseStatusListingModel
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Project Wise Status</h2>
+<hr />
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="CompanyId" class="control-label"></label>
+                <select id="comboCompany" asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Id", "Name"))" class="form-control">
+                    <option value="">Select a company</option>
+                </select>
+                <span asp-validation-for="CompanyId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="ProjectId" class="control-label"></label>
+                <select asp-for="ProjectId" id="comboProject" class="form-control"></select>
+                <span asp-validation-for="ProjectId" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="ProjectContactPersonId" class="control-label"></label>
+                <select id="comboContactPerson" asp-for="ProjectContactPersonId" asp-items="@(new SelectList(Model.ProjectContactPersons, "Id", "Name"))" class="form-control">
+                    <option value="">Select a contact person</option>
+                </select>
+                <span asp-validation-for="ProjectContactPersonId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Remarks" class="control-label"></label>
+                <input asp-for="Remarks" id="txtRemarks" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RelationWithClient" class="control-label"></label>
+                <select asp-for="RelationWithClient" id="comboRelationWithClient" asp-items="Html.GetEnumSelectList<EnumRelationWithClient>()" class="form-control">
+                    <option selected="selected" value="">Select a priority</option>
+                </select>
+                <span asp-validation-for="RelationWithClient" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    
+</form>
+
+<div>
+    <a asp-action="Index">Back</a>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#comboCompany').on('change', function () {
+            $('#comboProject option').remove();
+            var companyId = $('#comboCompany option:selected').val();
+            if (companyId != -1) {
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("FindProject", "IssueLog")?companyId=' + companyId,
+                    success: function (result) {
+                        //var s = '<option value="-1">Select project</option>';
+                        var s;
+                        for (var i = 0; i < result.length; i++) {
+                            s += '<option value="' + result[i].id + '">' + result[i].name + '</option>'
+                        }
+                        $('#comboProject').html(s);
+                    }
+                });
+            }
+        });
+    });
+</script>
