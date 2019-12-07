@@ -285,6 +285,48 @@ namespace IssueTracker.Data.Migrations
                     b.ToTable("Project");
                 });
 
+            modelBuilder.Entity("IssueTracker.Data.Models.ProjectContactPerson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Designation");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Mobile");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int?>("ProjectId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("ProjectContactPerson");
+                });
+
+            modelBuilder.Entity("IssueTracker.Data.Models.ProjectSupportPerson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<int?>("ProjectId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("ProjectSupportPerson");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -463,6 +505,24 @@ namespace IssueTracker.Data.Migrations
                     b.HasOne("IssueTracker.Data.Models.ApplicationUser", "ModifiedBy")
                         .WithMany()
                         .HasForeignKey("ModifiedById");
+                });
+
+            modelBuilder.Entity("IssueTracker.Data.Models.ProjectContactPerson", b =>
+                {
+                    b.HasOne("IssueTracker.Data.Models.Project", "Project")
+                        .WithMany("ProjectContacPersons")
+                        .HasForeignKey("ProjectId");
+                });
+
+            modelBuilder.Entity("IssueTracker.Data.Models.ProjectSupportPerson", b =>
+                {
+                    b.HasOne("IssueTracker.Data.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("IssueTracker.Data.Models.Project", "Project")
+                        .WithMany("SupportMembers")
+                        .HasForeignKey("ProjectId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

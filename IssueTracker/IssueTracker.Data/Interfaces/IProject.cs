@@ -10,8 +10,8 @@ namespace IssueTracker.Data
     {
         Project GetById(int id);
         IEnumerable<Project> GetAll();
-        Task Create(Project Project);
-        Task Edit(Project Project);
+        void Create(Project Project);
+        void Edit(Project Project);
         void Delete(int id);
 
         Company GetCompanyById(int id);

@@ -28,5 +28,7 @@ namespace IssueTracker.Data
         public DbSet<Project> Project { get; set; }
         public DbSet<Notification> Notification { get; set; }
         public DbSet<Message> Message { get; set; }
+        public DbSet<ProjectSupportPerson> ProjectSupportPerson { get; set; }
+        public DbSet<ProjectContactPerson> ProjectContactPerson { get; set; }
     }
 }

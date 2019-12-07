@@ -13,5 +13,8 @@ namespace IssueTracker.Data.Models
         public virtual Company Company { get; set; }
         public EnumProjectStatus Status { get; set; }
         public DateTime EndOfContractDate { get; set; }
+
+        public virtual IEnumerable<ProjectSupportPerson> SupportMembers { get; set; }
+        public virtual IEnumerable<ProjectContactPerson> ProjectContacPersons { get; set; }
     }
 }

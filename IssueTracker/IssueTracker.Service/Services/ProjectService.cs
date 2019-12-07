@@ -17,10 +17,10 @@ namespace IssueTracker.Service.Services
             _context = context;
         }
 
-        public async Task Create(Project Project)
+        public void Create(Project Project)
         {
             _context.Project.Add(Project);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public void Delete(int id)
@@ -30,15 +30,50 @@ namespace IssueTracker.Service.Services
             _context.SaveChanges();
         }
 
-        public async Task Edit(Project Project)
+        //public async Task Edit(Project Project)
+        //{
+        //    _context.Project.Update(Project);
+        //    await _context.SaveChangesAsync();
+        //}
+
+        public void Edit(Project Project)
         {
-            _context.Project.Update(Project);
-            await _context.SaveChangesAsync();
+            var projectSaved = GetById(Project.Id);
+            var supportMembers = projectSaved.SupportMembers;
+            var projectContactPersons = projectSaved.ProjectContacPersons;
+            if (supportMembers.Any())
+            {
+                foreach (var supportMember in supportMembers)
+                {
+                    _context.Entry(supportMember).State = EntityState.Deleted;
+                }
+            }
+            if (projectContactPersons.Any())
+            {
+                foreach (var projectContactPerson in projectContactPersons)
+                {
+                    _context.Entry(projectContactPerson).State = EntityState.Deleted;
+                }
+            }
+            projectSaved.Id = projectSaved.Id;
+            projectSaved.ProjectType = Project.ProjectType;
+            projectSaved.Code = Project.Code;
+            projectSaved.Name = Project.Name;
+            projectSaved.Company = Project.Company;
+            projectSaved.Status = Project.Status;
+            projectSaved.EndOfContractDate = Project.EndOfContractDate;
+            projectSaved.SupportMembers = Project.SupportMembers;
+            projectSaved.ProjectContacPersons = Project.ProjectContacPersons;
+
+            _context.SaveChanges();
         }
 
         public IEnumerable<Project> GetAll()
         {
             var projects = _context.Project
+                .Include(x => x.SupportMembers)
+                    .ThenInclude(y => y.ApplicationUser)
+                .Include(x => x.ProjectContacPersons)
                 .Include(x => x.CreatedBy)
                 .Include(x => x.ModifiedBy)
                 .Include(x => x.Company)
@@ -57,6 +92,10 @@ namespace IssueTracker.Service.Services
         public Project GetById(int id)
         {
             var project = _context.Project.Where(x => x.Id == id)
+                .Include(x => x.SupportMembers)
+                    .ThenInclude(y => y.ApplicationUser)
+                        .ThenInclude(z => z.Designation)
+                .Include(x => x.ProjectContacPersons)
                 .Include(x => x.CreatedBy)
                 .Include(x => x.ModifiedBy)
                 .Include(x => x.Company)

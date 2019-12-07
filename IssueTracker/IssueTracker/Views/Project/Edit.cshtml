@@ -5,70 +5,210 @@
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<style>
+    label.error {
+        color: red;
+    }
+</style>
 <h2 class="text-center">Edit Project</h2>
 <hr />
-<form asp-action="Edit">
-    <input type="hidden" asp-for="Id" />
-    <input type="hidden" asp-for="CreatedBy" />
-    <input type="hidden" asp-for="CreatedDate" />
+<form id="projectEditForm">
+    <input id="txtId" type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="CreatedBy" id="txtCreatedBy" />
+    <input type="hidden" asp-for="CreatedDate" id="txtCreatedDate" />
     <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="Code" class="control-label"></label>
-                <input asp-for="Code" class="form-control" />
-                <span asp-validation-for="Code" class="text-danger"></span>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Code" class="control-label"></label>
+                    <input id="txtCode" name="txtCode" asp-for="Code" class="form-control" />
+                    <span asp-validation-for="Code" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input id="txtName" name="txtName" asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="ProjectType" class="control-label"></label>
+                    <select asp-for="ProjectType" id="comboProjectType" name="comboProjectType" asp-items="Html.GetEnumSelectList<EnumProjectType>()" class="form-control">
+                        <option selected="selected" value="ProjectType">Select a type</option>
+                    </select>
+                    <span asp-validation-for="ProjectType" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="CompanyId" class="control-label"></label>
+                    <select asp-for="CompanyId" id="comboCompany" name="comboCompany" asp-items="@(new SelectList(Model.Companies, "Id", "Name"))" class="form-control">
+                        <option value="">Select a company</option>
+                    </select>
+                    <span asp-validation-for="CompanyId" class="text-danger"></span>
+                </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="ProjectType" class="control-label"></label>
-                <select asp-for="ProjectType" asp-items="Html.GetEnumSelectList<EnumProjectType>()" class="form-control">
-                    <option selected="selected" value="ProjectType">Select a type</option>
-                </select>
-                <span asp-validation-for="ProjectType" class="text-danger"></span>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Status" class="control-label"></label>
+                    <select asp-for="Status" id="comboStatus" name="comboStatus" asp-items="Html.GetEnumSelectList<EnumProjectStatus>()" class="form-control">
+                        <option selected="selected" value="ProjectType">Select a status</option>
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="EndOfContractDate" class="control-label"></label>
+                    <input id="dtpEndOfContractDate" name="dtpEndOfContractDate" asp-for="EndOfContractDate" class="form-control" />
+                    <span asp-validation-for="EndOfContractDate" class="text-danger"></span>
+                </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="CompanyId" class="control-label"></label>
-                <select asp-for="CompanyId" asp-items="@(new SelectList(Model.Companies, "Id", "Name"))" class="form-control">
-                    <option value="">Select a company</option>
-                </select>
-                <span asp-validation-for="CompanyId" class="text-danger"></span>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">Contact Persons</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Name</label>
+                                    <input id="txtContactPersonName" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Designation</label>
+                                    <input id="txtContactPersonDesignation" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Mobile</label>
+                                    <input id="txtContactPersonMobile" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Email</label>
+                                    <input id="txtContactPersonEmail" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-6 pull-right">
+                                <div class="form-group">
+                                    <input type="button" id="btnAddContactPerson" value="Add" class="btn btn-xs btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="tableContactPerson" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <td style="display:none;">Id</td>
+                                            <td>Name</td>
+                                            <td>Designation</td>
+                                            <td>Mobile</td>
+                                            <td>Email</td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var person in Model.ProjectContactPersons)
+                                        {
+                                        <tr>
+                                            <td style="display:none;">@person.Id</td>
+                                            <td>@person.Name</td>
+                                            <td>@person.Designation</td>
+                                            <td>@person.Mobile</td>
+                                            <td>@person.Email</td>
+                                            <td>
+                                                <button type="button" id="@person.Id" class="btn btn-xs btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                            </td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        Support Persons
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label asp-for="SupportPersonId" class="control-label"></label>
+                            <select id="comboSupportPerson" asp-for="SupportPersonId" asp-items="@(new SelectList(Model.SupportMembers, "Id", "Name"))" class="form-control">
+                                <option value="">Select a person</option>
+                            </select>
+                            <table id="tableSupportPerson" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <td style="display:none;">Id</td>
+                                        <td>Name</td>
+                                        <td>Email Address</td>
+                                        <td>Designation</td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var person in Model.SupportPersonListingModel)
+                                    {
+                                        <tr>
+                                            <td style="display:none;">@person.Id</td>
+                                            <td style="display:none;">@person.UserId</td>
+                                            <td>@person.UserName</td>
+                                            <td>@person.EmailAddress</td>
+                                            <td>@person.Designation</td>
+                                            <td>
+                                                <button type="button" id="@person.UserId" class="btn btn-xs btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="button" id="btnSubmit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+            <div class="col-md-6">
+
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" asp-items="Html.GetEnumSelectList<EnumProjectStatus>()" class="form-control">
-                    <option selected="selected" value="ProjectType">Select a status</option>
-                </select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="EndOfContractDate" class="control-label"></label>
-                <input asp-for="EndOfContractDate" class="form-control" />
-                <span asp-validation-for="EndOfContractDate" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-        <div class="col-md-6">
-            
-        </div>
+
     </div>
 </form>
 
@@ -76,3 +216,160 @@
     <a asp-action="Index">Back to Project List</a>
 </div>
 
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#comboSupportPerson').on('change', function () {
+            $("#tableSupportPerson").removeAttr("style")
+            var supportPersonId = $('#comboSupportPerson option:selected').val();
+            $.ajax({
+                    type: 'GET',
+                url: '@Url.Action("FindInvolvedPerson", "IssueLog")?issueInvolvedPersonId=' + supportPersonId,
+                    success: function (result) {
+                        $('#tableSupportPerson')
+                            .append('<tr><td style="display:none;">' + result.id + '</td><td>' +
+                            result.name + '</td>><td>' + result.emailAddress + '</td>><td>'
+                            + result.designation + '</td><td><button type="button" id="' + result.id + '"  class="btn btn-xs btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td></tr>');
+                    }
+                });
+        });
+
+        $("#btnAddContactPerson").click(function () {
+            $("#tableContactPerson").removeAttr("style");
+            var Name = $("#txtContactPersonName").val();
+            var Designation = $("#txtContactPersonDesignation").val();
+            var Mobile = $("#txtContactPersonMobile").val();
+            var Email = $("#txtContactPersonEmail").val();
+
+            $('#tableContactPerson')
+                .append('<tr><td style="display:none;">' + 0 + '</td><td>' +
+                Name + '</td>><td>' + Designation + '</td>><td>'
+                + Mobile + '</td><td>' + Email + '</td><td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td></tr>');
+        });
+
+        $('#tableSupportPerson').on('click', 'button.btn.btn-danger', function () {
+            $(this).parents('tr').remove();
+        });
+
+        $('#tableContactPerson').on('click', 'button.btn.btn-danger', function () {
+            $(this).parents('tr').remove();
+        });
+
+        $("#projectEditForm").validate({
+            rules: {
+                comboSupportPerson: {
+                    required: true
+                },
+                txtCode: {
+                    required: true
+                },
+                txtName: {
+                    required: true
+                },
+                comboProjectType: {
+                    required: true
+                },
+                comboStatus: {
+                    required: true
+                },
+                comboCompany: {
+                    required: true
+                },
+                dtpEndOfContractDate: {
+                    required: true
+                }
+            },
+            messages: {
+                comboSupportPerson: {
+                    required: "Support person is required!!!"
+                },
+                txtCode: {
+                    required: "Code date is required!!!"
+                },
+                txtName: {
+                    required: "Name is required!!!"
+                },
+                comboProjectType: {
+                    required: "Project Type is required!!!"
+                },
+                comboStatus: {
+                    required: "Status is required!!!"
+                },
+                comboCompany: {
+                    required: "Company is required!!!"
+                },
+                dtpEndOfContractDate: {
+                    required: "Contract Date is required!!!"
+                }
+            },
+            submitHandler: function (form) {
+                var supportPersons = new Array();
+                //var contactPersons = new Array();
+                var projectListingModel = {};
+
+                projectListingModel.Id = $("#txtId").val();
+                projectListingModel.Code = $("#txtCode").val();
+                projectListingModel.Name = $("#txtName").val();
+                projectListingModel.CompanyId = $("#comboCompany").val();
+                projectListingModel.ProjectType = $("#comboProjectType").val();
+                projectListingModel.Status = $("#comboStatus").val();
+                projectListingModel.EndOfContractDate = $("#dtpEndOfContractDate").val();
+                projectListingModel.CreatedBy = $("#txtCreatedBy").val();
+                projectListingModel.CreatedDate = $("#txtCreatedDate").val();
+
+                $("#tableSupportPerson tbody tr").each(function () {
+                    var row = $(this);
+                    supportPersons.push(row.find("td").eq(0).html());
+                });
+                projectListingModel.ProjectSupportPersonIds = supportPersons;
+
+                var contactPersons = $('#tableContactPerson tbody tr:has(td)').map(function (i, v) {
+                    var $td = $('td', this);
+                    return {
+                        Name: $td.eq(1).text(),
+                        Designation: $td.eq(2).text(),
+                        Mobile: $td.eq(3).text(),
+                        Email: $td.eq(4).text()
+                    }
+                }).get();
+                //projectListingModel.ContactPersonsString = contactPersons;
+                projectListingModel.ContactPersonsString = JSON.stringify({ 'ContactPersonsString': contactPersons });
+
+                //$("#tableContactPerson tbody tr").each(function () {
+                //    var row = $(this);
+                //    contactPersons.push(row.find("td").eq(1).html());
+                //});
+                //projectListingModel.ContactPersonsString = contactPersons;
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Project/Edit",
+                    data: JSON.stringify({
+                        'Id': projectListingModel.Id,
+                        'Code': projectListingModel.Code,
+                        'Name': projectListingModel.Name,
+                        'CompanyId': projectListingModel.CompanyId,
+                        'ProjectType': projectListingModel.ProjectType,
+                        'Status': projectListingModel.Status,
+                        'EndOfContractDate': projectListingModel.EndOfContractDate,
+                        'ProjectSupportPersonIds': projectListingModel.ProjectSupportPersonIds.join(),
+                        'ContactPersonsString': projectListingModel.ContactPersonsString,
+                        'CreatedBy': projectListingModel.CreatedBy,
+                        'CreatedDate': projectListingModel.CreatedDate,
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        window.location.href = data.redirectTo;
+                    }
+                });
+                return false;  // blocks regular submit since you have ajax
+            }
+        });
+
+        $("#btnSubmit").click(function () {
+            $('#projectEditForm').submit();
+        });
+    });
+</script>
