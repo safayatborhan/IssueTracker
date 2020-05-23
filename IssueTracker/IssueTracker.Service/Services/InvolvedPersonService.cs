@@ -27,7 +27,7 @@ namespace IssueTracker.Service.Services
                         .ThenInclude(z => z.Designation)
                 .Include(x => x.IssueLog)
                         .ThenInclude(y => y.Project)
-                        .ThenInclude(k => k.Company)
+                        .ThenInclude(k => k.Company) 
                 .ToList();
             return issueLogInvolvedPersons;  
         }
