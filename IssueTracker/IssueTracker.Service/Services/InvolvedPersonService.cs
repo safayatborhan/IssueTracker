@@ -29,7 +29,7 @@ namespace IssueTracker.Service.Services
                         .ThenInclude(y => y.Project)
                         .ThenInclude(k => k.Company)
                 .ToList();
-            return issueLogInvolvedPersons;
+            return issueLogInvolvedPersons; 
         }
 
         public IEnumerable<IssueLogInvolvedPerson> GetAllByIssueLogId(int id)
